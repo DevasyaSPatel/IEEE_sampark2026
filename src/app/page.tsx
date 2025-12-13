@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import { Users, Calendar, Award, ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar, Users, Star, Bot, Link as LinkIcon, Wifi, Shield, Award } from 'lucide-react';
 
 export default function Home() {
 
@@ -140,18 +140,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Explore Our Tracks */}
-      <section className="py-20 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-ieee-navy mb-4">Innovation Tracks for 2026</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
-            Choose your area of expertise and compete in our specialized domains.
+      {/* Explore Our Tracks - Redesigned High Contrast Section */}
+      <section className="py-24 bg-slate-900 bg-gradient-to-r from-slate-900 to-blue-900 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            Compete in 4 Cutting-Edge Tracks
+          </h2>
+          <p className="text-lg md:text-xl text-blue-200 max-w-2xl mx-auto mb-16">
+            Choose your arena and build the future.
           </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
+            {[
+              { title: "AI Agents", icon: <Bot size={32} /> },
+              { title: "Blockchain", icon: <LinkIcon size={32} /> },
+              { title: "IoT Systems", icon: <Wifi size={32} /> },
+              { title: "Security", icon: <Shield size={32} /> }
+            ].map((track, idx) => (
+              <Link href="/themes" key={idx}>
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group cursor-pointer flex flex-col items-center gap-4 h-full min-h-[160px] justify-center hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                  <div className="text-blue-300 group-hover:text-white group-hover:scale-110 transition-transform duration-300">
+                    {track.icon}
+                  </div>
+                  <span className="font-semibold text-white/80 group-hover:text-white text-lg">{track.title}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
           <Link
             href="/themes"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border-2 border-ieee-blue text-ieee-blue font-bold hover:bg-blue-50 transition-colors"
+            className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg shadow-lg shadow-blue-900/50 hover:shadow-blue-500/50 transition-all transform hover:-translate-y-1"
           >
-            View All Themes <ArrowRight size={20} />
+            Explore All Tracks <ArrowRight size={22} />
           </Link>
         </div>
       </section>
