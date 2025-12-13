@@ -41,7 +41,7 @@ export default function AboutPage() {
                                 IEEE COMMUNITY
                             </div>*/}
                             {/*  Replace with actual image later */}
-                            <img src="/gallery/IEEE LOGOs/IEEE Student Branch.png" alt="IEEE Team" className="object-cover w-full h-full" />
+                            <img src="/gallery/IEEE LOGOs/IEEE SB.jpg" alt="IEEE Team" className="object-cover w-full h-full" />
                         </div>
                     </div>
                 </div>

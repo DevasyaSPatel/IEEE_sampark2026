@@ -40,7 +40,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-ieee-blue text-sm font-semibold tracking-wide mb-6">
-              PRESENTED BY IEEE STUDENT BRANCH PDEU
+              IEEE STUDENT BRANCH PDEU PRESENTS
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-ieee-navy mb-6 leading-tight">
               SAMPARK <span className="text-ieee-blue">2026</span>
@@ -175,15 +175,15 @@ export default function Home() {
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
                 <Users size={24} />
               </div>
-              <span className="text-3xl font-bold mb-1">1200+</span>
+              <span className="text-3xl font-bold mb-1">100+</span>
               <span className="text-blue-200 text-sm">Members</span>
             </div>
             <div className="flex flex-col items-center px-4">
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
                 <Calendar size={24} />
               </div>
-              <span className="text-3xl font-bold mb-1">50+</span>
-              <span className="text-blue-200 text-sm">Events</span>
+              <span className="text-3xl font-bold mb-1"> 25+</span>
+              <span className="text-blue-200 text-sm">Events this year</span>
             </div>
             <div className="flex flex-col items-center px-4">
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
@@ -196,7 +196,7 @@ export default function Home() {
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
                 <Users size={24} />
               </div>
-              <span className="text-3xl font-bold mb-1">4</span>
+              <span className="text-3xl font-bold mb-1">7</span>
               <span className="text-blue-200 text-sm">Societies</span>
             </div>
           </div>
@@ -206,10 +206,11 @@ export default function Home() {
       <footer className="bg-gray-50 border-t border-gray-200 py-12 text-center text-gray-500 text-sm">
         <div className="max-w-7xl mx-auto px-4">
           <p className="mb-2">© 2026 IEEE Student Branch PDEU. All rights reserved.</p>
+          <p className="mb-2">Created by Devasya Patel (devasyaspatel@gmail.com)</p>
           <div className="flex justify-center gap-6 mt-4">
             <a href="#" className="hover:text-ieee-blue transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-ieee-blue transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-ieee-blue transition-colors">Contact Us</a>
+            <a href="/contact" className="hover:text-ieee-blue transition-colors">Contact Us</a>
           </div>
         </div>
       </footer>
