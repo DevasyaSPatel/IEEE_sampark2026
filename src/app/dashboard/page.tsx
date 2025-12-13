@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import RequestsList from '@/components/RequestsList';
 import { useConnectionLogic } from '@/hooks/useConnectionLogic'; // Import the new hook
+import { useAuth } from '@/context/AuthContext';
 
 type User = {
     id: string;
@@ -35,6 +36,7 @@ type Connection = {
 };
 
 export default function Dashboard() {
+    const { logout } = useAuth();
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -224,7 +226,7 @@ export default function Dashboard() {
 
     return (
         <div className="min-h-screen pt-20 px-4 md:px-8 bg-gray-50 font-sans">
-            <Navbar isLoggedIn={true} />
+            <Navbar />
 
             <div className="max-w-6xl mx-auto mt-10">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
@@ -239,6 +241,12 @@ export default function Dashboard() {
                             className={`px-4 py-2 rounded-lg font-semibold text-white shadow-md transition-all ${isScanning ? 'bg-green-600 animate-pulse' : 'bg-ieee-warning hover:bg-amber-600'}`}
                         >
                             {isScanning ? 'Scanning...' : '⚡ Connect via NFC'}
+                        </button>
+                        <button
+                            onClick={logout}
+                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors ml-4"
+                        >
+                            Logout
                         </button>
                     </div>
                 </div>
