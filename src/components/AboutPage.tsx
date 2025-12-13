@@ -37,11 +37,11 @@ export default function AboutPage() {
                         </div>
                         {/* Right: Graphic/Image Placeholder */}
                         <div className="relative h-64 md:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
-                            <div className="absolute inset-0 bg-blue-50 flex items-center justify-center text-[#002855]/20 font-bold text-4xl">
+                            {/*<div className="absolute inset-0 bg-blue-50 flex items-center justify-center text-[#002855]/20 font-bold text-4xl">
                                 IEEE COMMUNITY
-                            </div>
+                            </div>*/}
                             {/*  Replace with actual image later */}
-                            {/* <img src="/path/to/about-image.jpg" alt="IEEE Team" className="object-cover w-full h-full" /> */}
+                            <img src="/gallery/IEEE LOGOs/IEEE Student Branch.png" alt="IEEE Team" className="object-cover w-full h-full" />
                         </div>
                     </div>
                 </div>

@@ -56,7 +56,7 @@ export default function Home() {
                 Register for Conference <ArrowRight size={20} />
               </Link>
               <Link
-                href="/about"
+                href="/sampark-history"
                 className="bg-white border text-ieee-navy hover:bg-gray-50 border-gray-200 px-8 py-4 rounded-lg text-lg font-semibold transition-all flex items-center justify-center"
               >
                 Learn More

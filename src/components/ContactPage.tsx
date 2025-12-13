@@ -46,12 +46,12 @@ export default function ContactPage() {
                             <span
                                 className="w-full py-2 px-4 text-center rounded-lg bg-gray-50 text-[#002855] font-medium text-lg"
                             >
-                                xxx
+                                +91 9512343219
                             </span>
                             <span
                                 className="w-full py-2 px-4 text-center rounded-lg bg-gray-50 text-[#002855] font-medium text-lg"
                             >
-                                xxx
+                                +91 7383847528
                             </span>
                         </div>
                     </div>
