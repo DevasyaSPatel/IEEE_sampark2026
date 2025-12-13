@@ -140,6 +140,22 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Explore Our Tracks */}
+      <section className="py-20 bg-gray-50 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-ieee-navy mb-4">Innovation Tracks for 2026</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
+            Choose your area of expertise and compete in our specialized domains.
+          </p>
+          <Link
+            href="/themes"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border-2 border-ieee-blue text-ieee-blue font-bold hover:bg-blue-50 transition-colors"
+          >
+            View All Themes <ArrowRight size={20} />
+          </Link>
+        </div>
+      </section>
+
       {/* Animated Gallery */}
       <section className="py-16 bg-ieee-light overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 mb-8">
