@@ -117,7 +117,7 @@ export default function SearchPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 pt-20 pb-10 px-4 md:px-8 font-sans">
-            <Navbar isLoggedIn={!!currentUserId} />
+            <Navbar />
 
             {/* Header */}
             <div className="max-w-7xl mx-auto mb-10 mt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
