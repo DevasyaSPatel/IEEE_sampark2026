@@ -40,7 +40,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-ieee-blue text-sm font-semibold tracking-wide mb-6">
-              OFFICIAL IEEE EVENT
+              PRESENTED BY IEEE STUDENT BRANCH PDEU
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-ieee-navy mb-6 leading-tight">
               SAMPARK <span className="text-ieee-blue">2026</span>

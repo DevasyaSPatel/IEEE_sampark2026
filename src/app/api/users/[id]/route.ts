@@ -57,33 +57,24 @@ export async function POST(
         });
 
         // 3. Mutual Connection: Target -> Source (So Target remembers Source immediately)
+        // 3. Mutual Connection: Target -> Source (So Target remembers Source immediately)
         // Only if we have a valid sourceEmail (registered user)
         let mutualSuccess = true;
+        /* 
+        // DISABLED: This creates a duplicate "ghost" request (B->A pending) when A->B is created.
+        // We should strictly rely on the single request A->B.
         if (sourceEmail) {
-            // Retrieve Target User details to store in Source's list?
-            // Wait, addConnection stores 'source' details for the 'target'.
-            // To make Target see Source, we did the above.
-            // To make Source see Target, we need to swap roles.
-            // 'Target' becomes the 'Source' in the record, and 'Source' becomes the 'Target'.
-            // But we need Target's Name.
-
             const targetUser = await getUser(targetEmail);
             if (targetUser) {
                 mutualSuccess = await addConnection({
                     sourceEmail: targetEmail,      // Target "views" Source
                     targetEmail: sourceEmail,      // Source is the one receiving this entry? 
-                    // WAIT. `getUserConnections` filters by `targetEmail`.
-                    // If I want User A (Source) to appear in User B's (Target) list:
-                    // Row: Source=A, Target=B.  => getUserConnections(B) finds this. OK.
-
-                    // If I want User B (Target) to appear in User A's (Source) list:
-                    // Row: Source=B, Target=A.
-
                     sourceName: targetUser.name,
                     note: "Mutual Connection via NFC"
                 });
             }
         }
+        */
 
         if (forwardSuccess) return NextResponse.json({ success: true, mutual: mutualSuccess });
         return NextResponse.json({ error: "Failed to connect" }, { status: 500 });
