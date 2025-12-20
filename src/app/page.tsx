@@ -248,11 +248,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <p className="mb-2">© 2026 IEEE Student Branch PDEU. All rights reserved.</p>
           <p className="mb-2">Created by Devasya Patel (devasyaspatel@gmail.com)</p>
-          <div className="flex justify-center gap-6 mt-4">
-            <a href="#" className="hover:text-ieee-blue transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-ieee-blue transition-colors">Terms of Service</a>
-            <a href="/contact" className="hover:text-ieee-blue transition-colors">Contact Us</a>
-          </div>
         </div>
       </footer>
     </div>

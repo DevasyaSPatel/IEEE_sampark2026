@@ -242,7 +242,7 @@ export default function Register() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-1">
                                         <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <Layers size={14} className="text-ieee-blue" /> Preferred Theme
+                                            <Layers size={14} className="text-ieee-blue" /> Preferred Event
                                         </label>
                                         <div className="relative">
                                             <select
@@ -251,11 +251,16 @@ export default function Register() {
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 appearance-none"
                                             >
-                                                <option>AI Agents</option>
-                                                <option>Green Tech</option>
-                                                <option>Blockchain</option>
-                                                <option>IoT</option>
-                                                <option>Management</option>
+                                                <option>Expert Talk: Semiconductors & Hardware Acceleration </option>
+                                                <option>Expert Talk: Prof. Harish PM (IIT-GN)</option>
+                                                <option>Expert Talk: Advancements in Antenna Tech</option>
+                                                <option>Expert Talk: Industry 4.0 Applications</option>
+                                                <option>FPGA Workshop</option>
+                                                <option>MuJoCo & Inverse Kinematics Workshop</option>
+                                                <option>Keysight ADS Simulation Workshop</option>
+                                                <option>MOSFET-based Gate Driver Design Workshop</option>
+                                                <option>Two-stage Hackathon</option>
+                                                <option>Panel Discussion</option>
                                             </select>
                                             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
                                                 <svg width="10" height="6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1l4 4 4-4" /></svg>
@@ -320,10 +325,6 @@ export default function Register() {
                                     </>
                                 )}
                             </button>
-
-                            <p className="text-center text-xs text-gray-400 mt-4">
-                                By registering, you agree to our <a href="#" className="text-ieee-blue hover:underline">Privacy Policy</a> and <a href="#" className="text-ieee-blue hover:underline">Terms of Service</a>.
-                            </p>
                         </form>
 
                         <div className="mt-8 pt-6 border-t border-gray-100 text-center">

@@ -30,10 +30,9 @@ export default function Navbar() {
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
                         <Link href="/" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Home</Link>
-                        <Link href="/about" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">About</Link>
-                        <Link href="/themes" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Themes</Link>
-                        <Link href="/sampark-history" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Sampark</Link>
-                        <Link href="/gallery" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Gallery</Link>
+                        <Link href="/about" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">About IEEE PDEU</Link>
+                        <Link href="/sampark-history" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">About SAMPARK</Link>
+                        <Link href="/events" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Events</Link>
                         <Link href="/contact" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Contact</Link>
 
                         <div className="flex items-center gap-3 ml-4 pl-4 border-l border-gray-100">
@@ -89,10 +88,9 @@ export default function Navbar() {
                     >
                         <div className="px-4 pt-2 pb-6 space-y-2">
                             <Link href="/" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Home</Link>
-                            <Link href="/about" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">About</Link>
-                            <Link href="/themes" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Themes</Link>
-                            <Link href="/sampark-history" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Sampark</Link>
-                            <Link href="/gallery" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Gallery</Link>
+                            <Link href="/about" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">About IEEE PDEU</Link>
+                            <Link href="/sampark-history" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">About SAMPARK</Link>
+                            <Link href="/events" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Events</Link>
                             <Link href="/contact" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Contact</Link>
                             <div className="pt-4 px-3 border-t border-gray-50 mt-2">
                                 {isLoggedIn ? (

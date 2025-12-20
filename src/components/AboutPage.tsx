@@ -1,144 +1,186 @@
+'use client';
+
 import React from 'react';
-import { Lightbulb, Globe, Users, Linkedin, Zap, Share2 } from 'lucide-react';
-import Link from 'next/link';
+import { Lightbulb, Globe, Users, Linkedin, Zap, Share2, Cpu, Bot, Radio, Code, Signal, Computer } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+// Gallery Data
+const eventGallery = [
+    { id: 1, imageSrc: '/gallery/New You, New AI workshop by ieee ias/1759774521333.jpg', eventName: 'New You, New AI Workshop' },
+    { id: 2, imageSrc: '/gallery/NVIDIA Deep Learning workshop by ieee cis and ieee sb/1753177229171.jpg', eventName: 'NVIDIA Deep Learning Workshop' },
+    { id: 3, imageSrc: '/gallery/Public speaking by ieee sb and debsoc club of pdeu/1761884287452.jpg', eventName: 'Public Speaking Session' },
+    { id: 4, imageSrc: '/gallery/RF Systems and Antenna Design Workshop by ieee aps and ieee sb pdeu/1754367118783.jpg', eventName: 'RF Systems & Antenna Design' },
+    { id: 5, imageSrc: '/gallery/Road Safety ideathon by ieee its , ieee gs and ieee sb pdeu/1759134009881.jpg', eventName: 'Road Safety Ideathon' },
+    { id: 6, imageSrc: '/gallery/ROS workshop by ieee ras and ieee sb/1760647632350.jpg', eventName: 'ROS Workshop' },
+    { id: 7, imageSrc: '/gallery/STMania by ieee ias pdeu sbc with ieee sb pdeu and ieeegs/1756662363739.jpg', eventName: 'STMania' },
+    { id: 8, imageSrc: '/gallery/engineering essentials workshop by ieee cs pdeu and ieee sb pdeu/1755837685392.jpg', eventName: 'Engineering Essentials Workshop' },
+    { id: 9, imageSrc: '/gallery/IEEE Onboard 2025/1755181808683.jpg', eventName: 'IEEE Onboard 2025' },
+    { id: 10, imageSrc: '/gallery/ieee sps brain computer interfaces with ieee sb/1743186145270.jpg', eventName: 'Brain Computer Interfaces' },
+    { id: 11, imageSrc: '/gallery/MATLAB Innovation challenge by ieee gs, ieee sps pdeu, ieee wie pdeu and ieee sb pdeu/1740308103636.jpg', eventName: 'MATLAB Workshop' },
+];
 
 export default function AboutPage() {
+    // Gallery Logic
+    const midPoint = Math.ceil(eventGallery.length / 2);
+    const firstHalf = eventGallery.slice(0, midPoint);
+    const secondHalf = eventGallery.slice(midPoint);
+    const row1Gallery = [...firstHalf, ...firstHalf];
+    const row2Gallery = [...secondHalf, ...secondHalf];
+
+    const chapters = [
+        { name: "Computer Society (CS)", icon: <Cpu size={24} />, desc: "Focusing on computing technology and information processing." },
+        { name: "Robotics & Automation (RAS)", icon: <Bot size={24} />, desc: "Advancing robotics and automation technologies." },
+        { name: "Antennas & Propagation (APS)", icon: <Radio size={24} />, desc: "Exploring RF, microwave, and wireless technologies." },
+        { name: "Industry Applications (IAS)", icon: <Zap size={24} />, desc: "Bridging the gap between theory and industrial practice." },
+        { name: "Women in Engineering (WIE)", icon: <Users size={24} />, desc: "Empowering women in technology and engineering fields." },
+        { name: "Signal Processing (SPS)", icon: <Signal size={24} />, desc: "Converting Signals to Information." },
+        { name: "Computer Intelligence (CIS)", icon: <Computer size={24} />, desc: "Building Digital Brains" },
+    ];
+
     return (
         <div className="font-sans text-gray-800">
 
-            {/* A. The Hero Section */}
+            {/* A. Hero Section */}
             <section className="relative bg-gray-50 py-20 px-4 md:py-32 overflow-hidden">
-                {/* Subtle pattern background */}
                 <div className="absolute inset-0 z-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-
                 <div className="max-w-7xl mx-auto text-center relative z-10">
                     <h1 className="text-4xl md:text-6xl font-extrabold text-[#002855] mb-6">
-                        Empowering Future Innovators
+                        About IEEE PDEU Student Branch
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-                        Building a bridge between technology and community at PDEU.
+                        Empowering Future Innovators through Technology and Community.
                     </p>
                 </div>
             </section>
 
-            {/* B. Who We Are (Split Layout) */}
+            {/* B. Who We Are */}
             <section className="py-16 md:py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
-                        {/* Left: Content */}
                         <div className="border-l-4 border-[#00629B] pl-6 md:pl-10">
                             <h2 className="text-3xl font-bold text-[#002855] mb-6">Who We Are</h2>
                             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                                We are a vibrant technical community where students connect, share ideas, and grow together.
+                                The IEEE Student Branch at PDEU is a vibrant technical community where students connect, share ideas, and grow together. We serve as a catalyst for professional development and collaborative innovation.
                             </p>
                             <p className="text-lg text-gray-600 leading-relaxed">
-                                More than just a student chapter, we are a catalyst for professional development and collaborative innovation. Our members don't just attend events; they shape the future of technology through shared knowledge and collective ambition.
+                                Our goal is to provide a platform for students to explore their technical interests, gain leadership experience, and network with professionals.
                             </p>
                         </div>
-                        {/* Right: Graphic/Image Placeholder */}
-                        <div className="relative h-64 md:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
-                            {/*<div className="absolute inset-0 bg-blue-50 flex items-center justify-center text-[#002855]/20 font-bold text-4xl">
-                                IEEE COMMUNITY
-                            </div>*/}
-                            {/*  Replace with actual image later */}
-                            <img src="/gallery/IEEE LOGOs/IEEE SB.jpg" alt="IEEE Team" className="object-cover w-full h-full" />
+                        <div className="relative h-64 md:h-96 bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                            <img src="/gallery/IEEE LOGOs/ieee.png" alt="IEEE Team" className="object-cover w-full h-full" />
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* C. Mission & Vision Cards */}
-            <section className="py-16 bg-gray-50">
+            {/* C. Mission & Capabilities (Chapters) */}
+            <section className="py-16 bg-blue-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {/* Mission Card */}
-                        <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6">
-                                <Share2 className="w-8 h-8 text-[#00629B]" />
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-[#002855] mb-4">Our Technical Chapters</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">
+                            Specialized communities focusing on key areas of technology.
+                        </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+                        {chapters.map((chapter, idx) => (
+                            <div key={idx} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <div className="w-12 h-12 bg-blue-100/50 text-ieee-blue rounded-lg flex items-center justify-center mb-4">
+                                    {chapter.icon}
+                                </div>
+                                <h3 className="font-bold text-lg text-ieee-navy mb-2">{chapter.name}</h3>
+                                <p className="text-gray-600 text-sm">{chapter.desc}</p>
                             </div>
-                            <h3 className="text-2xl font-bold text-[#002855] mb-4">Our Mission</h3>
-                            <p className="text-gray-600 leading-relaxed">
-                                Fostering connection among students, professionals, and industry leaders to create a robust network of innovation and support.
-                            </p>
-                        </div>
-
-                        {/* Vision Card */}
-                        <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6">
-                                <Zap className="w-8 h-8 text-[#00629B]" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#002855] mb-4">Our Vision</h3>
-                            <p className="text-gray-600 leading-relaxed">
-                                To achieve technical excellence by nurturing a culture of continuous learning, research, and collaborative problem-solving.
-                            </p>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* D. Why Connect With Us? (Feature Highlights) */}
-            <section className="py-16 md:py-24 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-[#002855]">Why Connect With Us?</h2>
-                        <p className="mt-4 text-gray-600">Join a network that propels your professional journey.</p>
+            {/* D. Gallery Section (Integrated) */}
+            <section className="py-20 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#002855]">
+                        Gallery
+                    </h2>
+                    <p className="mt-4 text-lg text-gray-600">
+                        A glimpse into the vibrant events and milestones of our Student Branch.
+                    </p>
+                </div>
+
+                <div className="space-y-8">
+                    {/* Row 1 */}
+                    <div className="relative w-full flex overflow-hidden">
+                        <motion.div
+                            className="flex gap-4 sm:gap-6 whitespace-nowrap"
+                            animate={{ x: [0, '-50%'] }}
+                            transition={{
+                                x: { repeat: Infinity, repeatType: "loop", duration: 40, ease: "linear" },
+                            }}
+                            style={{ width: "200%" }}
+                        >
+                            {row1Gallery.map((event, index) => (
+                                <EventCard key={`row1-${event.id}-${index}`} event={event} />
+                            ))}
+                        </motion.div>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 text-center">
-                        {/* Feature 1 */}
-                        <div className="flex flex-col items-center">
-                            <div className="p-4 bg-gray-50 rounded-full mb-4">
-                                <Users className="w-10 h-10 text-[#00629B]" />
-                            </div>
-                            <h4 className="text-xl font-bold text-[#002855] mb-2">Professional Network</h4>
-                            <p className="text-gray-600">
-                                Connect with successful alumni and industry leaders who can provide mentorship and career guidance.
-                            </p>
-                        </div>
-
-                        {/* Feature 2 */}
-                        <div className="flex flex-col items-center">
-                            <div className="p-4 bg-gray-50 rounded-full mb-4">
-                                <Lightbulb className="w-10 h-10 text-[#00629B]" />
-                            </div>
-                            <h4 className="text-xl font-bold text-[#002855] mb-2">Collaborative Projects</h4>
-                            <p className="text-gray-600">
-                                Work together on innovative technical projects that challenge your skills and solve real-world problems.
-                            </p>
-                        </div>
-
-                        {/* Feature 3 */}
-                        <div className="flex flex-col items-center">
-                            <div className="p-4 bg-gray-50 rounded-full mb-4">
-                                <Globe className="w-10 h-10 text-[#00629B]" />
-                            </div>
-                            <h4 className="text-xl font-bold text-[#002855] mb-2">Knowledge Exchange</h4>
-                            <p className="text-gray-600">
-                                Participate in seminars, tech talks, and workshops to stay updated with the latest industry trends.
-                            </p>
-                        </div>
+                    {/* Row 2 */}
+                    <div className="relative w-full flex overflow-hidden">
+                        <motion.div
+                            className="flex gap-4 sm:gap-6 whitespace-nowrap"
+                            animate={{ x: ['-50%', 0] }}
+                            transition={{
+                                x: { repeat: Infinity, repeatType: "loop", duration: 45, ease: "linear" },
+                            }}
+                            style={{ width: "200%" }}
+                        >
+                            {row2Gallery.map((event, index) => (
+                                <EventCard key={`row2-${event.id}-${index}`} event={event} />
+                            ))}
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* E. The "Connect" CTA */}
+            {/* E. CTA */}
             <section className="bg-[#002855] py-16">
                 <div className="max-w-5xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                        Stay updated with our latest events and professional network.
+                    <h2 className="text-3xl font-bold text-white mb-8">
+                        Connect with us to start your journey.
                     </h2>
-                    <div className="flex justify-center">
-                        <a
-                            href="https://www.linkedin.com/company/ieee-pdeu-sb/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full transition-colors duration-300 text-lg shadow-lg"
-                        >
-                            Connect on LinkedIn <Linkedin className="ml-2 w-5 h-5" />
-                        </a>
-                    </div>
+                    <a
+                        href="https://www.linkedin.com/company/ieee-pdeu-sb/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full transition-colors shadow-lg"
+                    >
+                        Connect on LinkedIn <Linkedin className="ml-2 w-5 h-5" />
+                    </a>
                 </div>
             </section>
+        </div>
+    );
+}
+
+// Sub-component for Gallery Card
+function EventCard({ event }: { event: { id: number, imageSrc: string, eventName: string } }) {
+    return (
+        <div className="relative flex-none w-[20rem] h-40 sm:w-[28rem] sm:h-64 rounded-xl overflow-hidden shadow-md group cursor-pointer bg-gray-200">
+            <img
+                src={event.imageSrc}
+                alt={event.eventName}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.innerText = event.eventName;
+                }}
+            />
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <h3 className="text-white font-bold text-xl px-4 text-center">
+                    {event.eventName}
+                </h3>
+            </div>
         </div>
     );
 }
