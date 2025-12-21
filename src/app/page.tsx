@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import { ArrowRight, Calendar, Users, Star, Bot, Link as LinkIcon, Wifi, Shield, Award } from 'lucide-react';
+import { ArrowRight, Calendar, Users, Star, Bot, Link as LinkIcon, Wifi, Shield, Award, Cpu, Radio, Factory, Sparkles, Zap } from 'lucide-react';
 
 export default function Home() {
 
@@ -140,44 +140,89 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Explore Our Tracks - Redesigned High Contrast Section */}
-      <section className="py-24 bg-slate-900 bg-gradient-to-r from-slate-900 to-blue-900 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+      <section className="py-24 bg-slate-50 relative overflow-hidden font-sans">
+        {/* Background decorative elements (Subtle) */}
+        <div className="absolute inset-0 z-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00629B 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
 
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Compete in 4 Cutting-Edge Tracks
-          </h2>
-          <p className="text-lg md:text-xl text-blue-200 max-w-2xl mx-auto mb-16">
-            Choose your arena and build the future.
-          </p>
+        <div className="max-w-4xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-ieee-navy mb-6 tracking-tight">
+              Events Overview
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Explore our technical lineup featuring expert sessions, hands-on workshops, and competitive showcases.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden divide-y divide-gray-100">
             {[
-              { title: "AI Agents", icon: <Bot size={32} /> },
-              { title: "Blockchain", icon: <LinkIcon size={32} /> },
-              { title: "IoT Systems", icon: <Wifi size={32} /> },
-              { title: "Security", icon: <Shield size={32} /> }
-            ].map((track, idx) => (
-              <Link href="/themes" key={idx}>
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group cursor-pointer flex flex-col items-center gap-4 h-full min-h-[160px] justify-center hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-                  <div className="text-blue-300 group-hover:text-white group-hover:scale-110 transition-transform duration-300">
-                    {track.icon}
+              {
+                title: "Computer Society",
+                subtitle: "Expert Talk: Semiconductors & HW Acceleration • Workshop: FPGA & ML Integration",
+                link: "/events"
+              },
+              {
+                title: "Robotics & Automation",
+                subtitle: "Expert Talk by Prof. Harish PM (IIT-GN) • Workshop: MuJoCo Simulation",
+                link: "/events"
+              },
+              {
+                title: "Antennas & Propagation",
+                subtitle: "Expert Talk: Antenna Tech Advancements • Workshop: Keysight ADS",
+                link: "/events"
+              },
+              {
+                title: "Industry Applications",
+                subtitle: "Expert Talk: Industry 4.0 • Workshop: MOSFET Gate Driver Design",
+                link: "/events"
+              },
+              {
+                title: "Women in Engineering",
+                subtitle: "Review Paper Hackathon • Interactive Expert Panel Discussion",
+                link: "/events"
+              },
+              {
+                title: "Poster Presentation",
+                subtitle: "Showcase: Smart Devices, RF Systems, Energy Management, Applied AI, Robotics",
+                link: "/events"
+              }
+            ].map((event, idx) => (
+              <Link
+                key={idx}
+                href={event.link}
+                className="group block p-6 hover:bg-gray-50 transition-colors duration-200 relative overflow-hidden"
+              >
+                <div className="flex items-center gap-6">
+                  {/* Vertical Accent */}
+                  <div className="w-1 self-stretch bg-ieee-blue opacity-80 group-hover:opacity-100 group-hover:scale-y-110 transition-all rounded-full"></div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-bold text-ieee-navy group-hover:text-ieee-blue transition-colors truncate">
+                      {event.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 mt-1 truncate group-hover:text-gray-700 transition-colors">
+                      {event.subtitle}
+                    </p>
                   </div>
-                  <span className="font-semibold text-white/80 group-hover:text-white text-lg">{track.title}</span>
+
+                  {/* Navigation Icon */}
+                  <div className="text-gray-300 group-hover:text-ieee-blue group-hover:translate-x-1 transition-all">
+                    <ArrowRight size={20} />
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
 
-          <Link
-            href="/themes"
-            className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg shadow-lg shadow-blue-900/50 hover:shadow-blue-500/50 transition-all transform hover:-translate-y-1"
-          >
-            Explore All Tracks <ArrowRight size={22} />
-          </Link>
+          <div className="text-center mt-12">
+            <Link
+              href="/events"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-ieee-blue hover:text-ieee-navy transition-colors uppercase tracking-wide border-b-2 border-transparent hover:border-ieee-blue pb-0.5"
+            >
+              View Full Schedule <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </section>
 

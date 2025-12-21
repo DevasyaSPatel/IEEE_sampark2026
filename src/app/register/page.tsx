@@ -2,349 +2,356 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft, User, Mail, Phone, Building, BookOpen, GraduationCap, Layers, Users, Zap, CheckCircle, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Navbar from '@/components/Navbar';
+import { User, Mail, Phone, School, Hash, CreditCard, Calendar, Clock, Lock } from 'lucide-react';
+
+interface RegisterFormData {
+    name: string;
+    email: string;
+    phone: string;
+    university: string;
+    department: string;
+    year: string;
+    morningEvent: string;   // Column H
+    afternoonEvent: string; // Column I
+    transactionId: string;  // Column K
+    ieeeMembershipNumber?: string; // Column L
+}
 
 export default function Register() {
     const router = useRouter();
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<RegisterFormData>({
         name: '',
         email: '',
         phone: '',
         university: '',
         department: '',
         year: '1st Year',
-        theme: 'AI Agents',
-        participationType: 'Individual',
-        teamName: '',
-        anythingElse: ''
+        morningEvent: '',
+        afternoonEvent: '',
+        transactionId: '',
+        ieeeMembershipNumber: ''
     });
+
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    // Morning Session: Expert Talks
+    const morningEvents = [
+        "Expert Talk: Semiconductors & HW Acceleration (CS)",
+        "Expert Talk: Prof. Harish PM (IIT-GN) (RAS)",
+        "Expert Talk: Advancements in Antenna Tech (APS)",
+        "Expert Talk: Industry 4.0 Applications (IAS)",
+        "Panel Discussion: Interactive Experts Panel (WIE)"
+    ];
+
+    // Afternoon Session: Workshops & Competitions
+    const afternoonEvents = [
+        "Workshop: FPGA & Machine Learning Integration (CS)",
+        "Workshop: MuJoCo: Advanced Robotics Sim (RAS)",
+        "Workshop: Keysight ADS Simulation (APS)",
+        "Workshop: MOSFET-based Gate Driver Design (IAS)",
+        "Review Paper Hackathon (WIE)",
+        "Poster Presentation"
+    ];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setMessage('');
+        setErrorMessage(null);
 
         try {
+            // Map data to backend expected format
+            // H: morningEvent -> theme
+            // I: afternoonEvent -> participationType
+
+            const payload = {
+                ...formData,
+                theme: formData.morningEvent,           // Maps to Column H
+                participationType: formData.afternoonEvent, // Maps to Column I
+                github: '',                             // Column S (Empty as field is removed)
+            };
+
             const res = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             });
 
             const data = await res.json();
 
-            if (res.ok && data.success) {
-                setMessage('Registration successful! Redirecting to login...');
-                setTimeout(() => router.push('/login'), 2000);
-            } else {
-                setMessage(data.message || 'Registration failed. Please try again.');
+            if (!res.ok) {
+                throw new Error(data.message || 'Registration failed');
             }
-        } catch (error) {
-            setMessage('Something went wrong. Please check your connection.');
+
+            setMessage('Registration successful! Redirecting to login...');
+            setTimeout(() => router.push('/login'), 2000);
+        } catch (error: any) {
+            setErrorMessage(error.message);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 relative overflow-hidden font-sans">
-            {/* Background Decoration */}
-            <div className="absolute inset-0 z-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00629B 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }}></div>
-
-            <div className="max-w-5xl mx-auto px-4 py-8 md:py-12 relative z-10">
-                {/* Header / Nav */}
-                <div className="mb-8 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 text-ieee-navy hover:text-ieee-blue transition-colors group">
-                        <div className="bg-white p-2 rounded-full shadow-sm group-hover:shadow-md transition-all border border-gray-100">
-                            <ArrowLeft size={20} />
-                        </div>
-                        <span className="font-semibold text-sm tracking-wide">Back to Home</span>
-                    </Link>
-                    <div className="text-right hidden sm:block">
-                        <h2 className="text-lg font-bold text-ieee-navy tracking-tight">SAMPARK 2026</h2>
-                        <p className="text-xs text-ieee-blue font-semibold tracking-widest uppercase">IEEE SB PDEU</p>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
-
-                    {/* Sidebar / Info Panel (Desktop) */}
-                    <div className="hidden md:flex md:w-1/3 bg-ieee-navy text-white p-10 flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-ieee-blue rounded-full opacity-20 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-ieee-sky rounded-full opacity-20 blur-3xl"></div>
-
-                        <div className="relative z-10">
-                            <h3 className="text-2xl font-bold mb-2">Join the Innovation</h3>
-                            <p className="text-blue-200 text-sm leading-relaxed mb-6">Be part of the premier networking event connecting students and professionals.</p>
-
-                            <div className="space-y-4">
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/10 p-2 rounded-lg"><Users size={18} className="text-ieee-sky" /></div>
-                                    <div>
-                                        <h4 className="font-semibold text-sm">Network</h4>
-                                        <p className="text-xs text-gray-300">Connect with 1200+ peers</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/10 p-2 rounded-lg"><Zap size={18} className="text-ieee-sky" /></div>
-                                    <div>
-                                        <h4 className="font-semibold text-sm">Innovate</h4>
-                                        <p className="text-xs text-gray-300">Showcase your ideas</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/10 p-2 rounded-lg"><GraduationCap size={18} className="text-ieee-sky" /></div>
-                                    <div>
-                                        <h4 className="font-semibold text-sm">Learn</h4>
-                                        <p className="text-xs text-gray-300">Workshops & Experts</p>
-                                    </div>
-                                </div>
-                            </div>
+        <div className="min-h-screen bg-slate-50">
+            <Navbar />
+            <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="max-w-3xl mx-auto"
+                >
+                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                        <div className="bg-ieee-blue px-8 py-8 text-center relative overflow-hidden">
+                            <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-10"></div>
+                            <h2 className="text-3xl font-bold text-white relative z-10">Event Registration</h2>
+                            <p className="text-blue-100 mt-2 relative z-10">Secure your spot for Sampark 2026</p>
                         </div>
 
-                        <div className="relative z-10 text-xs text-gray-400 mt-12">
-                            <p>© 2026 IEEE Student Branch PDEU</p>
-                        </div>
-                    </div>
-
-                    {/* Main Form Area */}
-                    <div className="flex-1 p-8 md:p-12">
-                        <div className="mb-8">
-                            <h1 className="text-3xl font-bold text-ieee-navy mb-2">Register for Sampark</h1>
-                            <p className="text-gray-500">Fill in your details to secure your spot.</p>
-                        </div>
-
-                        {message && (
-                            <div className={`flex items-center gap-3 p-4 rounded-lg mb-6 text-sm font-medium ${message.includes('successful') ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
-                                {message.includes('successful') ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                                {message}
-                            </div>
-                        )}
-
-                        <form onSubmit={handleSubmit} className="space-y-8">
-
-                            {/* Section 1: Personal Details */}
-                            <div>
-                                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Personal Details</h3>
+                        <form onSubmit={handleSubmit} className="px-8 py-10 space-y-8">
+                            {/* Personal Details */}
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-bold text-gray-800 border-b pb-2 flex items-center gap-2">
+                                    <User size={20} className="text-ieee-blue" /> Personal Details
+                                </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-1">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <User size={14} className="text-ieee-blue" /> Full Name <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            required
-                                            name="name"
-                                            type="text"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 placeholder:text-gray-400"
-                                            placeholder="John Doe"
-                                        />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <Mail size={14} className="text-ieee-blue" /> Email Address <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            required
-                                            name="email"
-                                            type="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 placeholder:text-gray-400"
-                                            placeholder="john@example.com"
-                                        />
-                                    </div>
-                                    <div className="space-y-1 md:col-span-2">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <Phone size={14} className="text-ieee-blue" /> Phone Number <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            required
-                                            name="phone"
-                                            type="tel"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 placeholder:text-gray-400"
-                                            placeholder="+91 98765 43210"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Section 2: Academic Details */}
-                            <div>
-                                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Academic Information</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-1 md:col-span-2">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <Building size={14} className="text-ieee-blue" /> University / Institution <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            required
-                                            name="university"
-                                            type="text"
-                                            value={formData.university}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700"
-                                            placeholder="e.g. PDEU"
-                                        />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <BookOpen size={14} className="text-ieee-blue" /> Department <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            required
-                                            name="department"
-                                            type="text"
-                                            value={formData.department}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700"
-                                            placeholder="e.g. Computer Science"
-                                        />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <GraduationCap size={14} className="text-ieee-blue" /> Year of Study
-                                        </label>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Full Name</label>
                                         <div className="relative">
+                                            <User className="absolute left-3 top-3 text-gray-400" size={18} />
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                required
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="John Doe"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Email Address</label>
+                                        <div className="relative">
+                                            <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                required
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="john@example.com"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Phone Number</label>
+                                        <div className="relative">
+                                            <Phone className="absolute left-3 top-3 text-gray-400" size={18} />
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                required
+                                                pattern="[0-9]{10}"
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="9876543210"
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Year of Study</label>
+                                        <div className="relative">
+                                            <Calendar className="absolute left-3 top-3 text-gray-400" size={18} />
                                             <select
                                                 name="year"
+                                                required
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
                                                 value={formData.year}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 appearance-none"
                                             >
                                                 <option>1st Year</option>
                                                 <option>2nd Year</option>
                                                 <option>3rd Year</option>
                                                 <option>4th Year</option>
-                                                <option>Other</option>
+                                                <option>Masters/PhD</option>
                                             </select>
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                                                <svg width="10" height="6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1l4 4 4-4" /></svg>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Section 3: Event Preferences */}
-                            <div>
-                                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Event Preferences</h3>
+                            {/* Academic Details */}
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-bold text-gray-800 border-b pb-2 flex items-center gap-2">
+                                    <School size={20} className="text-ieee-blue" /> Academic Details
+                                </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-1">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <Layers size={14} className="text-ieee-blue" /> Preferred Event
-                                        </label>
-                                        <div className="relative">
-                                            <select
-                                                name="theme"
-                                                value={formData.theme}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 appearance-none"
-                                            >
-                                                <option>Expert Talk: Semiconductors & Hardware Acceleration </option>
-                                                <option>Expert Talk: Prof. Harish PM (IIT-GN)</option>
-                                                <option>Expert Talk: Advancements in Antenna Tech</option>
-                                                <option>Expert Talk: Industry 4.0 Applications</option>
-                                                <option>FPGA Workshop</option>
-                                                <option>MuJoCo & Inverse Kinematics Workshop</option>
-                                                <option>Keysight ADS Simulation Workshop</option>
-                                                <option>MOSFET-based Gate Driver Design Workshop</option>
-                                                <option>Two-stage Hackathon</option>
-                                                <option>Panel Discussion</option>
-                                            </select>
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                                                <svg width="10" height="6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1l4 4 4-4" /></svg>
-                                            </div>
-                                        </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">University/College</label>
+                                        <input
+                                            type="text"
+                                            name="university"
+                                            required
+                                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                            placeholder="PDEU"
+                                            value={formData.university}
+                                            onChange={handleChange}
+                                        />
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                            <Users size={14} className="text-ieee-blue" /> Participation Type
-                                        </label>
-                                        <div className="relative">
-                                            <select
-                                                name="participationType"
-                                                value={formData.participationType}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 appearance-none"
-                                            >
-                                                <option>Individual</option>
-                                                <option>Team</option>
-                                            </select>
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                                                <svg width="10" height="6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 1l4 4 4-4" /></svg>
-                                            </div>
-                                        </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Department</label>
+                                        <input
+                                            type="text"
+                                            name="department"
+                                            required
+                                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                            placeholder="ICT / Computer Science"
+                                            value={formData.department}
+                                            onChange={handleChange}
+                                        />
                                     </div>
+                                </div>
+                            </div>
 
-                                    {/* Conditional Team Name Input */}
-                                    {formData.participationType === 'Team' && (
-                                        <div className="space-y-1 md:col-span-2 animate-fadeIn">
-                                            <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
-                                                <Users size={14} className="text-ieee-blue" /> Team Name <span className="text-red-500">*</span>
-                                            </label>
+                            {/* Session Selection (Dual Session Event) */}
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-bold text-gray-800 border-b pb-2 flex items-center gap-2">
+                                    <Clock size={20} className="text-ieee-blue" /> Session Selection
+                                </h3>
+
+                                {/* Morning Session */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700 block">Morning Session (Expert Talks) (9:00 AM - 12:00 PM) <span className="text-red-500">*</span></label>
+                                    <div className="relative">
+                                        <div className="absolute left-3 top-3 text-ieee-blue pointer-events-none">
+                                            <span className="font-bold text-xs">AM</span>
+                                        </div>
+                                        <select
+                                            name="morningEvent"
+                                            required
+                                            className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                                            value={formData.morningEvent}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Morning Event...</option>
+                                            {morningEvents.map((event, idx) => (
+                                                <option key={idx} value={event}>{event}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {/* Afternoon Session */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700 block">Afternoon Session (Workshops) (2:00 PM - 5:00 PM) <span className="text-red-500">*</span></label>
+                                    <div className="relative">
+                                        <div className="absolute left-3 top-3 text-ieee-blue pointer-events-none">
+                                            <span className="font-bold text-xs">PM</span>
+                                        </div>
+                                        <select
+                                            name="afternoonEvent"
+                                            required
+                                            className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                                            value={formData.afternoonEvent}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Afternoon Event...</option>
+                                            {afternoonEvents.map((event, idx) => (
+                                                <option key={idx} value={event}>{event}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Additional Required Info */}
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-bold text-gray-800 border-b pb-2 flex items-center gap-2">
+                                    <CreditCard size={20} className="text-ieee-blue" /> Payment & Verification
+                                </h3>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Transaction ID / Reference Number <span className="text-red-500">*</span></label>
+                                        <div className="relative">
+                                            <CreditCard className="absolute left-3 top-3 text-gray-400" size={18} />
                                             <input
-                                                required
-                                                name="teamName"
                                                 type="text"
-                                                value={formData.teamName}
+                                                name="transactionId"
+                                                required
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="Enter ID from payment receipt"
+                                                value={formData.transactionId}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-ieee-blue focus:ring-1 focus:ring-ieee-blue transition-all bg-gray-50 focus:bg-white text-gray-700 placeholder:text-gray-400"
-                                                placeholder="Enter your team name"
                                             />
                                         </div>
-                                    )}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">IEEE Membership Number (Optional)</label>
+                                        <div className="relative">
+                                            <Hash className="absolute left-3 top-3 text-gray-400" size={18} />
+                                            <input
+                                                type="text"
+                                                name="ieeeMembershipNumber"
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="Enter your 8-digit IEEE ID"
+                                                value={formData.ieeeMembershipNumber}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
+                            {/* Status Messages */}
+                            {errorMessage && (
+                                <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm font-medium animate-pulse border border-red-100">
+                                    {errorMessage}
+                                </div>
+                            )}
+                            {message && (
+                                <div className="p-4 bg-green-50 text-green-600 rounded-lg text-sm font-medium border border-green-100">
+                                    {message}
+                                </div>
+                            )}
+
                             {/* Submit Button */}
-                            <button
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-ieee-blue hover:bg-blue-700 text-white font-bold py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all transform active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                                className={`w-full py-4 rounded-xl font-bold text-white text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 ${loading
+                                        ? 'bg-gray-400 cursor-not-allowed'
+                                        : 'bg-ieee-blue hover:bg-blue-700'
+                                    }`}
                             >
                                 {loading ? (
-                                    <>
-                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                        <span>Processing...</span>
-                                    </>
+                                    <>Processing...</>
                                 ) : (
-                                    <>
-                                        <span>Complete Registration</span>
-                                        <ArrowLeft size={18} className="rotate-180" />
-                                    </>
+                                    <>Complete Registration <Lock size={20} /></>
                                 )}
-                            </button>
-                        </form>
+                            </motion.button>
 
-                        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-                            <p className="text-sm text-gray-500">
-                                Already have an account? <Link href="/login" className="font-bold text-ieee-blue hover:text-blue-700 hover:underline transition-colors">Login here</Link>
+                            <p className="text-center text-sm text-gray-500">
+                                Already registered? <a href="/login" className="text-ieee-blue font-semibold hover:underline">Log in here</a>
                             </p>
-                        </div>
+                        </form>
                     </div>
-                </div>
+                </motion.div>
             </div>
-
-            <style jsx global>{`
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(-5px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fadeIn {
-                    animation: fadeIn 0.3s ease-out forwards;
-                }
-            `}</style>
         </div>
     );
 }

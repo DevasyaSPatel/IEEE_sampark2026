@@ -28,13 +28,13 @@ export default function AboutPage() {
     const row2Gallery = [...secondHalf, ...secondHalf];
 
     const chapters = [
-        { name: "Computer Society (CS)", icon: <Cpu size={24} />, desc: "Focusing on computing technology and information processing." },
-        { name: "Robotics & Automation (RAS)", icon: <Bot size={24} />, desc: "Advancing robotics and automation technologies." },
-        { name: "Antennas & Propagation (APS)", icon: <Radio size={24} />, desc: "Exploring RF, microwave, and wireless technologies." },
-        { name: "Industry Applications (IAS)", icon: <Zap size={24} />, desc: "Bridging the gap between theory and industrial practice." },
-        { name: "Women in Engineering (WIE)", icon: <Users size={24} />, desc: "Empowering women in technology and engineering fields." },
-        { name: "Signal Processing (SPS)", icon: <Signal size={24} />, desc: "Converting Signals to Information." },
-        { name: "Computer Intelligence (CIS)", icon: <Computer size={24} />, desc: "Building Digital Brains" },
+        { name: "Computer Society (CS)", logo: "/gallery/IEEE LOGOs/IEEE CS.png", desc: "Focusing on computing technology and information processing." },
+        { name: "Robotics & Automation (RAS)", logo: "/gallery/IEEE LOGOs/IEEE RAS.png", desc: "Advancing robotics and automation technologies." },
+        { name: "Antennas & Propagation (APS)", logo: "/gallery/IEEE LOGOs/IEEE APS.png", desc: "Exploring RF, microwave, and wireless technologies." },
+        { name: "Industry Applications (IAS)", logo: "/gallery/IEEE LOGOs/IEEE IAS.png", desc: "Bridging the gap between theory and industrial practice." },
+        { name: "Women in Engineering (WIE)", logo: "/gallery/IEEE LOGOs/IEEE WIE.png", desc: "Empowering women in technology and engineering fields." },
+        { name: "Signal Processing (SPS)", logo: "/gallery/IEEE LOGOs/IEEE SPS.png", desc: "Converting Signals to Information." },
+        { name: "Computer Intelligence (CIS)", logo: "/gallery/IEEE LOGOs/IEEE CIS.png", desc: "Building Digital Brains" },
     ];
 
     return (
@@ -84,12 +84,18 @@ export default function AboutPage() {
                     </div>
                     <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
                         {chapters.map((chapter, idx) => (
-                            <div key={idx} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                                <div className="w-12 h-12 bg-blue-100/50 text-ieee-blue rounded-lg flex items-center justify-center mb-4">
-                                    {chapter.icon}
+                            <div key={idx} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-start space-x-4">
+                                <div className="w-20 h-20 flex-shrink-0 flex items-center justify-center bg-gray-50 rounded-lg p-2">
+                                    <img
+                                        src={chapter.logo}
+                                        alt={`${chapter.name} Logo`}
+                                        className="w-full h-full object-contain"
+                                    />
                                 </div>
-                                <h3 className="font-bold text-lg text-ieee-navy mb-2">{chapter.name}</h3>
-                                <p className="text-gray-600 text-sm">{chapter.desc}</p>
+                                <div>
+                                    <h3 className="font-bold text-lg text-ieee-navy mb-2">{chapter.name}</h3>
+                                    <p className="text-gray-600 text-sm">{chapter.desc}</p>
+                                </div>
                             </div>
                         ))}
                     </div>

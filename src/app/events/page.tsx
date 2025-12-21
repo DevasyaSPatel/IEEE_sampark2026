@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import { motion } from 'framer-motion';
 import { Calendar, Cpu, Radio, Zap, Activity, Users, Lightbulb, Bot } from 'lucide-react';
 import Link from 'next/link';
+import ConferenceItinerary from '@/components/ConferenceItinerary';
 
 export default function EventsPage() {
     const chapters = [
@@ -85,6 +86,9 @@ export default function EventsPage() {
                         Explore the cutting-edge workshops, expert talks, and competitions organized by our specialized chapters.
                     </p>
                 </div>
+
+                {/* Conference Itinerary */}
+                <ConferenceItinerary />
 
                 {/* Poster Presentation Highlight Section */}
                 <motion.div

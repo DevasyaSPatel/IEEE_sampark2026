@@ -251,7 +251,7 @@ export default function AdminDashboard() {
                             <thead>
                                 <tr className="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-semibold tracking-wider">
                                     <th className="px-6 py-4">User Identity</th>
-                                    <th className="px-6 py-4">Registered Theme</th>
+                                    <th className="px-6 py-4">Registered Events</th>
                                     <th className="px-6 py-4">Status</th>
                                     <th className="px-6 py-4 text-right">Actions</th>
                                 </tr>

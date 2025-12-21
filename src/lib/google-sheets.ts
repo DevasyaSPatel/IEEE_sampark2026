@@ -29,15 +29,27 @@ export async function authenticateUser(username: string, pass: string) {
         // Fetching range A:L from 'Form Responses 1'
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:L',
+            range: 'Form Responses 1!A:N', // Fetch up to N for password check
         });
 
         const rows = response.data.values;
         if (!rows || rows.length === 0) return null;
 
         const user = rows.find((row: string[]) => {
-            if (!row[2] || !row[11]) return false;
-            return row[2].trim() === username.trim() && row[11].trim() === pass.trim();
+            const emailMatch = row[2]?.trim() === username.trim();
+            if (!emailMatch) return false;
+
+            // Check Password in Column N (Index 13) - New Schema
+            const passN = row[13]?.trim();
+            if (passN && passN === pass.trim()) return true;
+
+            // Fallback: Check Password in Column L (Index 11) - Old Schema
+            // Only if N is empty or didn't match (and we want to support old users who haven't been migrated)
+            // Note: In new schema, L is IEEE Membership. We assume IEEE number won't coincidentally match the password.
+            const passL = row[11]?.trim();
+            if (passL && passL === pass.trim()) return true;
+
+            return false;
         });
 
         if (user) {
@@ -85,7 +97,7 @@ export async function appendUserAndGetCredentials(userData: any) {
 
     await sheets.spreadsheets.values.append({
         spreadsheetId: SHEET_ID,
-        range: 'Form Responses 1!A:Q',
+        range: 'Form Responses 1!A:S', // Extended to S
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [[
@@ -99,13 +111,15 @@ export async function appendUserAndGetCredentials(userData: any) {
                 userData.theme || '',        // H
                 userData.participationType || '', // I
                 userData.teamName || '',     // J
-                userData.anythingElse || '', // K
-                password,                    // L
-                'Pending',                   // M: Status
-                '',                          // N: LinkedIn
-                '',                          // O: Instagram
-                '',                          // P: GitHub
-                slug                         // Q: Slug (New)
+                userData.transactionId || '', // K
+                userData.ieeeMembershipNumber || '', // L
+                'Pending',                   // M: Status (Fixed)
+                password,                    // N: Password (Fixed)
+                userData.anythingElse || '', // O: Anything Else (Moved)
+                '',                          // P: LinkedIn (Moved)
+                slug,                        // Q: Slug (Fixed)
+                '',                          // R: Instagram (Moved)
+                userData.github || ''          // S: GitHub Profile URL (Mapped from userData.github)
             ]],
         },
     });
@@ -119,7 +133,7 @@ export async function getAllUsers() {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:P', // Fetch up to P (GitHub)
+            range: 'Form Responses 1!A:S', // Fetch up to S
         });
 
         const rows = response.data.values;
@@ -137,12 +151,15 @@ export async function getAllUsers() {
             theme: row[7],
             participationType: row[8],
             teamName: row[9],
-            anythingElse: row[10],
-            status: row[12] || 'Pending',
-            linkedin: row[13] || '',
-            instagram: row[14] || '',
-            github: row[15] || '',
-            slug: row[16] || '' // Column Q
+            transactionId: row[10] || '', // K
+            ieeeMembershipNumber: row[11] || '', // L
+            status: row[12] || 'Pending', // M
+            // Password N is 13
+            anythingElse: row[14], // O
+            linkedin: row[15] || '', // P
+            slug: row[16] || '', // Q
+            instagram: row[17] || '', // R
+            github: row[18] || '', // S
         }));
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -155,7 +172,7 @@ export async function updateUserStatus(rowIndex: number, newStatus: string) {
 
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!M${rowIndex}`,
+        range: `Form Responses 1!M${rowIndex}`, // Status at M
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [[newStatus]]
@@ -175,32 +192,45 @@ export async function updateUserDetails(rowIndex: number, data: any) {
         data.year,
         data.theme,
         data.participationType,
-        data.teamName,
-        data.anythingElse
+        data.teamName
     ];
 
+    // 1. Update A..J (Name..TeamName)
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!B${rowIndex}:K${rowIndex}`,
+        range: `Form Responses 1!B${rowIndex}:J${rowIndex}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [mainValues]
         }
     });
 
-    // Update Socials: N, O, P
-    const socialValues = [
-        data.linkedin || '',
+    // 2. Update anythingElse (O) and LinkedIn (P)
+    // O=Anything, P=LinkedIn
+    const middleValues = [
+        data.anythingElse || '',
+        data.linkedin || ''
+    ];
+    await sheets.spreadsheets.values.update({
+        spreadsheetId: SHEET_ID,
+        range: `Form Responses 1!O${rowIndex}:P${rowIndex}`,
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+            values: [middleValues]
+        }
+    });
+
+    // 3. Update Instagram (R) and GitHub (S) - Skip Q(Slug)
+    const endValues = [
         data.instagram || '',
         data.github || ''
     ];
-
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!N${rowIndex}:P${rowIndex}`,
+        range: `Form Responses 1!R${rowIndex}:S${rowIndex}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-            values: [socialValues]
+            values: [endValues]
         }
     });
 }
@@ -348,7 +378,7 @@ export async function getPassword(rowIndex: number) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: `Form Responses 1!L${rowIndex}`,
+            range: `Form Responses 1!N${rowIndex}`, // Password moved to N
         });
 
         return response.data.values?.[0]?.[0] || null;
@@ -363,7 +393,7 @@ export async function getUser(email: string) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:Q',
+            range: 'Form Responses 1!A:S',
         });
 
         const rows = response.data.values;
@@ -380,12 +410,14 @@ export async function getUser(email: string) {
                 phone: userRow[3] || '',
                 role: 'user',
                 theme: userRow[7] || '',
-                bio: userRow[10] || '',
-                linkedin: userRow[13] || '',
-                instagram: userRow[14] || '',
-                github: userRow[15] || '',
-                slug: userRow[16] || '',
-                participationType: userRow[8] || '', // Column I
+                bio: userRow[14] || '', // O (14)
+                transactionId: userRow[10] || '', // K
+                ieeeMembershipNumber: userRow[11] || '', // L
+                linkedin: userRow[15] || '', // P (15)
+                slug: userRow[16] || '', // Q (16)
+                instagram: userRow[17] || '', // R (17)
+                github: userRow[18] || '', // S (18)
+                participationType: userRow[8] || '',
                 connections: connections,
             };
         }
@@ -436,7 +468,7 @@ export async function getUserBySlug(slug: string) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:Q',
+            range: 'Form Responses 1!A:S',
         });
 
         const rows = response.data.values;
@@ -456,11 +488,11 @@ export async function getUserBySlug(slug: string) {
                 // email: userRow[2], // Maybe hide email for public profile?
                 role: 'user',
                 theme: userRow[7] || '',
-                bio: userRow[10] || '',
-                linkedin: userRow[13] || '',
-                instagram: userRow[14] || '',
-                github: userRow[15] || '',
-                slug: userRow[16] || '',
+                bio: userRow[14] || '', // O
+                linkedin: userRow[15] || '', // P
+                slug: userRow[16] || '', // Q
+                instagram: userRow[17] || '', // R
+                github: userRow[18] || '', // S
                 participationType: userRow[8] || '',
                 connections: connectionsCount,
             };
@@ -478,7 +510,7 @@ export async function searchUsers(query: string) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:Q',
+            range: 'Form Responses 1!A:S',
         });
 
         const rows = response.data.values;
@@ -496,7 +528,7 @@ export async function searchUsers(query: string) {
             .map((row: string[]) => ({
                 name: row[1],
                 theme: row[7] || '',
-                slug: row[16] || '', // Return slug so we can link to them
+                slug: row[16] || '', // Q
                 // Do not return email/phone in search results for privacy
             }))
             .slice(0, 10); // Limit results
