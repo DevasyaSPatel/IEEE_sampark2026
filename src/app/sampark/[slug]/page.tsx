@@ -8,7 +8,7 @@ import ParticipantProfileCard from '@/components/ParticipantProfileCard';
 type PublicUser = {
     id: string; // Email/ID
     name: string;
-    theme: string;
+    selectedEvent: string;
     bio: string;
     slug: string;
     role: string;
@@ -16,7 +16,8 @@ type PublicUser = {
     year?: string;
     department?: string;
     university?: string;
-    // Add other public fields
+    posterTheme?: string;
+    isPosterPresenting?: string;
 };
 
 type ConnectionStatus = 'None' | 'Pending' | 'Accepted';
@@ -131,7 +132,9 @@ export default function PublicProfile({ params }: { params: Promise<{ slug: stri
     const cardUser = {
         id: profile.id,
         name: profile.name,
-        theme: profile.theme,
+        selectedEvent: profile.selectedEvent,
+        posterTheme: profile.posterTheme,
+        isPosterPresenting: profile.isPosterPresenting,
         connections: profile.connections || 0,
         bio: profile.bio,
         year: profile.year,

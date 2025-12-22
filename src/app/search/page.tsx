@@ -8,10 +8,13 @@ import { Search, Grid, List as ListIcon } from 'lucide-react';
 type User = {
     id: string; // email
     name: string;
-    theme: string;
+    selectedEvent: string;
     connections: number;
-    bio?: string;
-    participationType?: string;
+    posterTheme?: string;
+    isPosterPresenting?: string;
+    year?: string;
+    department?: string;
+    university?: string;
 };
 
 type ConnectionStatus = 'None' | 'Pending' | 'Accepted';
@@ -81,7 +84,7 @@ export default function SearchPage() {
             const q = searchQuery.toLowerCase();
             result = result.filter(u =>
                 u.name.toLowerCase().includes(q) ||
-                (u.theme && u.theme.toLowerCase().includes(q))
+                (u.selectedEvent && u.selectedEvent.toLowerCase().includes(q))
             );
         }
 

@@ -110,10 +110,11 @@ export const GoogleSheetService = {
         rowValues[SHEET_CONFIG.INDEX.UNIVERSITY] = userData.university || '';
         rowValues[SHEET_CONFIG.INDEX.DEPARTMENT] = userData.department || '';
         rowValues[SHEET_CONFIG.INDEX.YEAR] = userData.year || '';
-        rowValues[SHEET_CONFIG.INDEX.EVENT_MORNING] = userData.theme || ''; // Mapping Theme -> Morning
-        rowValues[SHEET_CONFIG.INDEX.EVENT_AFTERNOON] = userData.participationType || ''; // Mapping Participation -> Afternoon
+        rowValues[SHEET_CONFIG.INDEX.SELECTED_EVENT] = userData.selectedEvent || '';
+        rowValues[SHEET_CONFIG.INDEX.POSTER_THEME] = userData.posterTheme || '';
         rowValues[SHEET_CONFIG.INDEX.TRANSACTION_ID] = userData.transactionId || '';
         rowValues[SHEET_CONFIG.INDEX.IEEE_MEMBERSHIP] = userData.ieeeMembershipNumber || '';
+        rowValues[SHEET_CONFIG.INDEX.IS_POSTER_PRESENTING] = userData.isPosterPresenting || 'No';
         rowValues[SHEET_CONFIG.INDEX.STATUS] = 'Pending';
         rowValues[SHEET_CONFIG.INDEX.PASSWORD] = password;
         rowValues[SHEET_CONFIG.INDEX.GITHUB] = userData.github || '';
@@ -156,8 +157,8 @@ export const GoogleSheetService = {
             university: row[SHEET_CONFIG.INDEX.UNIVERSITY],
             department: row[SHEET_CONFIG.INDEX.DEPARTMENT],
             year: row[SHEET_CONFIG.INDEX.YEAR],
-            theme: row[SHEET_CONFIG.INDEX.EVENT_MORNING],
-            participationType: row[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+            selectedEvent: row[SHEET_CONFIG.INDEX.SELECTED_EVENT],
+            posterTheme: row[SHEET_CONFIG.INDEX.POSTER_THEME],
             transactionId: row[SHEET_CONFIG.INDEX.TRANSACTION_ID],
             ieeeMembershipNumber: row[SHEET_CONFIG.INDEX.IEEE_MEMBERSHIP],
             status: row[SHEET_CONFIG.INDEX.STATUS] || 'Pending',
@@ -165,6 +166,7 @@ export const GoogleSheetService = {
             linkedin: row[SHEET_CONFIG.INDEX.LINKEDIN],
             slug: row[SHEET_CONFIG.INDEX.SLUG],
             instagram: row[SHEET_CONFIG.INDEX.INSTAGRAM],
+            isPosterPresenting: row[SHEET_CONFIG.INDEX.IS_POSTER_PRESENTING],
         }));
     },
 
@@ -189,9 +191,9 @@ export const GoogleSheetService = {
 
         // Update Name..Participation (B..I)
         const range1Start = SHEET_CONFIG.COLUMNS.NAME;
-        const range1End = SHEET_CONFIG.COLUMNS.EVENT_AFTERNOON;
+        const range1End = SHEET_CONFIG.COLUMNS.POSTER_THEME;
         const startIdx = SHEET_CONFIG.INDEX.NAME;
-        const endIdx = SHEET_CONFIG.INDEX.EVENT_AFTERNOON;
+        const endIdx = SHEET_CONFIG.INDEX.POSTER_THEME;
 
         // Construct array from data
         const rowValues1 = [
@@ -201,8 +203,8 @@ export const GoogleSheetService = {
             data.university,
             data.department,
             data.year,
-            data.theme, // Morning
-            data.participationType // Afternoon
+            data.selectedEvent, // Was Theme/Morning
+            data.posterTheme // Was Participation/Afternoon
         ];
 
         await sheets.spreadsheets.values.update({
@@ -306,8 +308,11 @@ export const GoogleSheetService = {
             )
             .map((user: any) => ({
                 name: user.name,
-                theme: user.theme,
-                slug: user.slug
+                selectedEvent: user.selectedEvent,
+                slug: user.slug,
+                year: user.year,
+                department: user.department,
+                university: user.university
             }))
             .slice(0, 10);
     },
@@ -363,8 +368,8 @@ export const GoogleSheetService = {
                 email: userRow[SHEET_CONFIG.INDEX.EMAIL],
                 phone: userRow[SHEET_CONFIG.INDEX.PHONE],
                 role: 'user',
-                theme: userRow[SHEET_CONFIG.INDEX.EVENT_MORNING],
-                participationType: userRow[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+                selectedEvent: userRow[SHEET_CONFIG.INDEX.SELECTED_EVENT],
+                posterTheme: userRow[SHEET_CONFIG.INDEX.POSTER_THEME],
                 transactionId: userRow[SHEET_CONFIG.INDEX.TRANSACTION_ID],
                 ieeeMembershipNumber: userRow[SHEET_CONFIG.INDEX.IEEE_MEMBERSHIP],
                 linkedin: userRow[SHEET_CONFIG.INDEX.LINKEDIN],
@@ -492,10 +497,13 @@ export const GoogleSheetService = {
                 rowIndex: index + 2,
                 name: row[SHEET_CONFIG.INDEX.NAME],
                 email: row[SHEET_CONFIG.INDEX.EMAIL],
-                theme: row[SHEET_CONFIG.INDEX.EVENT_MORNING], // Theme is Morning Event
+                selectedEvent: row[SHEET_CONFIG.INDEX.SELECTED_EVENT],
                 connections: count,
-                participationType: row[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
-                slug: row[SHEET_CONFIG.INDEX.SLUG]
+                posterTheme: row[SHEET_CONFIG.INDEX.POSTER_THEME],
+                slug: row[SHEET_CONFIG.INDEX.SLUG],
+                year: row[SHEET_CONFIG.INDEX.YEAR],
+                department: row[SHEET_CONFIG.INDEX.DEPARTMENT],
+                university: row[SHEET_CONFIG.INDEX.UNIVERSITY]
             };
         });
     },
@@ -562,12 +570,13 @@ export const GoogleSheetService = {
                 name: userRow[SHEET_CONFIG.INDEX.NAME],
                 // email: email, // Hide email for public?
                 role: 'user',
-                theme: userRow[SHEET_CONFIG.INDEX.EVENT_MORNING],
+                selectedEvent: userRow[SHEET_CONFIG.INDEX.SELECTED_EVENT],
                 linkedin: userRow[SHEET_CONFIG.INDEX.LINKEDIN],
                 slug: userRow[SHEET_CONFIG.INDEX.SLUG],
                 instagram: userRow[SHEET_CONFIG.INDEX.INSTAGRAM],
                 github: userRow[SHEET_CONFIG.INDEX.GITHUB],
-                participationType: userRow[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+                posterTheme: userRow[SHEET_CONFIG.INDEX.POSTER_THEME],
+                isPosterPresenting: userRow[SHEET_CONFIG.INDEX.IS_POSTER_PRESENTING],
                 year: userRow[SHEET_CONFIG.INDEX.YEAR],
                 department: userRow[SHEET_CONFIG.INDEX.DEPARTMENT],
                 university: userRow[SHEET_CONFIG.INDEX.UNIVERSITY],

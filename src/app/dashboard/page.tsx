@@ -27,8 +27,9 @@ type User = {
     name: string;
     email: string;
     role: string;
-    theme: string;                // Morning Event
-    participationType: string;    // Afternoon Event
+    selectedEvent: string;
+    posterTheme: string;
+    isPosterPresenting: string;
     transactionId: string;
     ieeeMembershipNumber: string;
     connections: number;
@@ -362,33 +363,45 @@ export default function Dashboard() {
                                 <h3 className="text-lg font-bold text-ieee-navy mb-4 flex items-center gap-2">
                                     <Calendar className="text-ieee-blue" size={20} /> Event Registration Details
                                 </h3>
-                                <div className="grid md:grid-cols-2 gap-6">
+
+                                <div className="space-y-4">
+                                    {/* Main Event */}
                                     <div className="space-y-1">
-                                        <label className="text-xs font-semibold text-gray-400 uppercase">Morning Session</label>
-                                        <div className="flex items-start gap-2 text-gray-700 bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                            <Clock size={16} className="mt-1 text-ieee-yellow shrink-0" />
-                                            <span className="font-medium">{user.theme || 'Not Registered'}</span>
+                                        <label className="text-xs font-semibold text-gray-400 uppercase">Selected Technical Event</label>
+                                        <div className="flex items-start gap-2 text-gray-700 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                            <Calendar size={16} className="mt-1 text-ieee-blue shrink-0" />
+                                            <span className="font-medium">{user.selectedEvent || 'Not Registered'}</span>
                                         </div>
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-xs font-semibold text-gray-400 uppercase">Afternoon Session</label>
-                                        <div className="flex items-start gap-2 text-gray-700 bg-gray-50 p-3 rounded-lg border border-gray-200">
-                                            <Clock size={16} className="mt-1 text-ieee-yellow shrink-0" />
-                                            <span className="font-medium">{user.participationType || 'Not Registered'}</span>
+
+                                    {/* Poster Presentation Conditional */}
+                                    {user.isPosterPresenting === 'Yes' && (
+                                        <div className="space-y-1">
+                                            <label className="text-xs font-semibold text-gray-400 uppercase">Poster Presentation</label>
+                                            <div className="flex items-start gap-2 text-gray-700 bg-amber-50 p-3 rounded-lg border border-amber-100">
+                                                <Hash size={16} className="mt-1 text-amber-600 shrink-0" />
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold text-amber-800 text-sm">Presenting Poster</span>
+                                                    <span className="text-sm">{user.posterTheme}</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className="text-xs font-semibold text-gray-400 uppercase">Transaction ID</label>
-                                        <div className="flex items-center gap-2 text-gray-600">
-                                            <CreditCard size={16} />
-                                            <span className="font-mono bg-slate-100 px-2 py-1 rounded text-sm">{user.transactionId || 'N/A'}</span>
+                                    )}
+
+                                    <div className="grid grid-cols-2 gap-4 pt-2">
+                                        <div className="space-y-1">
+                                            <label className="text-xs font-semibold text-gray-400 uppercase">Transaction ID</label>
+                                            <div className="flex items-center gap-2 text-gray-600">
+                                                <CreditCard size={16} />
+                                                <span className="font-mono bg-slate-100 px-2 py-1 rounded text-sm break-all">{user.transactionId || 'N/A'}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className="text-xs font-semibold text-gray-400 uppercase">IEEE ID</label>
-                                        <div className="flex items-center gap-2 text-gray-600">
-                                            <Hash size={16} />
-                                            <span className="font-mono text-sm">{user.ieeeMembershipNumber || 'Non-Member'}</span>
+                                        <div className="space-y-1">
+                                            <label className="text-xs font-semibold text-gray-400 uppercase">IEEE ID</label>
+                                            <div className="flex items-center gap-2 text-gray-600">
+                                                <Hash size={16} />
+                                                <span className="font-mono text-sm">{user.ieeeMembershipNumber || 'Non-Member'}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

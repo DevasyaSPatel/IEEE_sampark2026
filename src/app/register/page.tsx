@@ -13,9 +13,10 @@ interface RegisterFormData {
     university: string;
     department: string;
     year: string;
-    morningEvent: string;   // Column H
-    afternoonEvent: string; // Column I
-    transactionId: string;  // Column J
+    selectedEvent: string;      // Column H
+    isPosterPresenting: string; // Column N (Yes/No)
+    posterTheme: string;        // Column I
+    transactionId: string;      // Column J
     ieeeMembershipNumber?: string; // Column K
     github?: string; // Column S
 }
@@ -29,8 +30,9 @@ export default function Register() {
         university: '',
         department: '',
         year: '1st Year',
-        morningEvent: '',
-        afternoonEvent: '',
+        selectedEvent: '',
+        isPosterPresenting: 'No',
+        posterTheme: '',
         transactionId: '',
         ieeeMembershipNumber: '',
         github: ''
@@ -40,23 +42,27 @@ export default function Register() {
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    // Morning Session: Expert Talks
-    const morningEvents = [
+    // Technical Events (Selected Event)
+    const technicalEvents = [
         "Expert Talk: Semiconductors & HW Acceleration (CS)",
         "Expert Talk: Prof. Harish PM (IIT-GN) (RAS)",
         "Expert Talk: Advancements in Antenna Tech (APS)",
         "Expert Talk: Industry 4.0 Applications (IAS)",
-        "Panel Discussion: Interactive Experts Panel (WIE)"
-    ];
-
-    // Afternoon Session: Workshops & Competitions
-    const afternoonEvents = [
+        "Panel Discussion: Interactive Experts Panel (WIE)",
         "Workshop: FPGA & Machine Learning Integration (CS)",
         "Workshop: MuJoCo: Advanced Robotics Sim (RAS)",
         "Workshop: Keysight ADS Simulation (APS)",
         "Workshop: MOSFET-based Gate Driver Design (IAS)",
-        "Review Paper Hackathon (WIE)",
-        "Poster Presentation"
+        "Review Paper Hackathon (WIE)"
+    ];
+
+    // Poster Themes
+    const posterThemes = [
+        "Theme 1: Advancements in AI/ML",
+        "Theme 2: Robotics & Automation",
+        "Theme 3: Wireless Communications",
+        "Theme 4: Power & Energy Systems",
+        "Theme 5: Women in Engineering"
     ];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -76,8 +82,9 @@ export default function Register() {
 
             const payload = {
                 ...formData,
-                theme: formData.morningEvent,           // Maps to Column H
-                participationType: formData.afternoonEvent, // Maps to Column I
+                selectedEvent: formData.selectedEvent,           // Maps to Column H
+                posterTheme: formData.isPosterPresenting === 'Yes' ? formData.posterTheme : '', // Maps to Column I
+                isPosterPresenting: formData.isPosterPresenting, // Maps to Column N
                 github: formData.github || '',          // Column S
             };
 
@@ -227,55 +234,90 @@ export default function Register() {
                                 </div>
                             </div>
 
-                            {/* Session Selection (Dual Session Event) */}
+                            {/* Event Selection */}
                             <div className="space-y-6">
                                 <h3 className="text-xl font-bold text-gray-800 border-b pb-2 flex items-center gap-2">
-                                    <Clock size={20} className="text-ieee-blue" /> Session Selection
+                                    <Clock size={20} className="text-ieee-blue" /> Event Selection
                                 </h3>
 
-                                {/* Morning Session */}
+                                {/* Main Technical Event */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-gray-700 block">Morning Session (Expert Talks) (9:00 AM - 12:00 PM) <span className="text-red-500">*</span></label>
+                                    <label className="text-sm font-semibold text-gray-700 block">Select Technical Event <span className="text-red-500">*</span></label>
                                     <div className="relative">
                                         <div className="absolute left-3 top-3 text-ieee-blue pointer-events-none">
-                                            <span className="font-bold text-xs">AM</span>
+                                            <Calendar size={18} />
                                         </div>
                                         <select
-                                            name="morningEvent"
+                                            name="selectedEvent"
                                             required
                                             className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
-                                            value={formData.morningEvent}
+                                            value={formData.selectedEvent}
                                             onChange={handleChange}
                                         >
-                                            <option value="">Select Morning Event...</option>
-                                            {morningEvents.map((event, idx) => (
+                                            <option value="">Select an Event...</option>
+                                            {technicalEvents.map((event, idx) => (
                                                 <option key={idx} value={event}>{event}</option>
                                             ))}
                                         </select>
                                     </div>
                                 </div>
 
-                                {/* Afternoon Session */}
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-gray-700 block">Afternoon Session (Workshops) (2:00 PM - 5:00 PM) <span className="text-red-500">*</span></label>
-                                    <div className="relative">
-                                        <div className="absolute left-3 top-3 text-ieee-blue pointer-events-none">
-                                            <span className="font-bold text-xs">PM</span>
-                                        </div>
-                                        <select
-                                            name="afternoonEvent"
-                                            required
-                                            className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
-                                            value={formData.afternoonEvent}
-                                            onChange={handleChange}
-                                        >
-                                            <option value="">Select Afternoon Event...</option>
-                                            {afternoonEvents.map((event, idx) => (
-                                                <option key={idx} value={event}>{event}</option>
-                                            ))}
-                                        </select>
+                                {/* Poster Presentation Toggle */}
+                                <div className="space-y-4 pt-2">
+                                    <label className="text-sm font-semibold text-gray-700 block">Are you presenting a Poster? <span className="text-red-500">*</span></label>
+                                    <div className="flex gap-6">
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                            <input
+                                                type="radio"
+                                                name="isPosterPresenting"
+                                                value="Yes"
+                                                checked={formData.isPosterPresenting === 'Yes'}
+                                                onChange={handleChange}
+                                                className="w-5 h-5 text-ieee-blue focus:ring-ieee-blue border-gray-300"
+                                            />
+                                            <span className="text-gray-700 font-medium">Yes</span>
+                                        </label>
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                            <input
+                                                type="radio"
+                                                name="isPosterPresenting"
+                                                value="No"
+                                                checked={formData.isPosterPresenting === 'No'}
+                                                onChange={handleChange}
+                                                className="w-5 h-5 text-ieee-blue focus:ring-ieee-blue border-gray-300"
+                                            />
+                                            <span className="text-gray-700 font-medium">No</span>
+                                        </label>
                                     </div>
                                 </div>
+
+                                {/* Poster Theme Selection (Conditional) */}
+                                {formData.isPosterPresenting === 'Yes' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        className="space-y-2"
+                                    >
+                                        <label className="text-sm font-semibold text-gray-700 block">Select Poster Theme <span className="text-red-500">*</span></label>
+                                        <div className="relative">
+                                            <div className="absolute left-3 top-3 text-ieee-blue pointer-events-none">
+                                                <Hash size={18} />
+                                            </div>
+                                            <select
+                                                name="posterTheme"
+                                                required
+                                                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                                                value={formData.posterTheme}
+                                                onChange={handleChange}
+                                            >
+                                                <option value="">Select Poster Theme...</option>
+                                                {posterThemes.map((theme, idx) => (
+                                                    <option key={idx} value={theme}>{theme}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </motion.div>
+                                )}
                             </div>
 
                             {/* Additional Required Info */}

@@ -8,13 +8,14 @@ interface ParticipantProfileCardProps {
     user: {
         id: string;
         name: string;
-        theme: string;
+        selectedEvent: string;
         connections: number;
         bio?: string;
         linkedin?: string;
         instagram?: string;
         github?: string;
-        participationType?: string;
+        posterTheme?: string;
+        isPosterPresenting?: string;
         year?: string;
         department?: string;
         university?: string;
