@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { updateUserStatus } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 import { sendWelcomeEmail } from '@/lib/email';
 
 export async function POST(request: Request) {
@@ -12,11 +12,10 @@ export async function POST(request: Request) {
 
     try {
         // 1. Update Sheet Status
-        await updateUserStatus(rowIndex, 'Approved');
+        await GoogleSheetService.updateUserStatus(rowIndex, 'Approved');
 
         // 2. Get Password securely
-        const { getPassword } = await import('@/lib/google-sheets');
-        const retrievedPassword = await getPassword(rowIndex);
+        const retrievedPassword = await GoogleSheetService.getPassword(rowIndex);
 
         if (!retrievedPassword) throw new Error("Could not retrieve password for email");
 

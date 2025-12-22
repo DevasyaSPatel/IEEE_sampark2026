@@ -15,8 +15,9 @@ interface RegisterFormData {
     year: string;
     morningEvent: string;   // Column H
     afternoonEvent: string; // Column I
-    transactionId: string;  // Column K
-    ieeeMembershipNumber?: string; // Column L
+    transactionId: string;  // Column J
+    ieeeMembershipNumber?: string; // Column K
+    github?: string; // Column S
 }
 
 export default function Register() {
@@ -31,7 +32,8 @@ export default function Register() {
         morningEvent: '',
         afternoonEvent: '',
         transactionId: '',
-        ieeeMembershipNumber: ''
+        ieeeMembershipNumber: '',
+        github: ''
     });
 
     const [loading, setLoading] = useState(false);
@@ -76,7 +78,7 @@ export default function Register() {
                 ...formData,
                 theme: formData.morningEvent,           // Maps to Column H
                 participationType: formData.afternoonEvent, // Maps to Column I
-                github: '',                             // Column S (Empty as field is removed)
+                github: formData.github || '',          // Column S
             };
 
             const res = await fetch('/api/auth/register', {
@@ -91,8 +93,8 @@ export default function Register() {
                 throw new Error(data.message || 'Registration failed');
             }
 
-            setMessage('Registration successful! Redirecting to login...');
-            setTimeout(() => router.push('/login'), 2000);
+            setMessage('Registration successful! Redirecting...');
+            setTimeout(() => router.push('/approval'), 1500);
         } catch (error: any) {
             setErrorMessage(error.message);
         } finally {
@@ -315,6 +317,27 @@ export default function Register() {
                                 </div>
                             </div>
 
+                            {/* Professional Links / GitHub */}
+                            <div className="space-y-6">
+                                <h3 className="text-xl font-bold text-gray-800 border-b pb-2 flex items-center gap-2">
+                                    <Hash size={20} className="text-ieee-blue" /> Professional Links
+                                </h3>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-gray-700">GitHub Profile URL (Optional)</label>
+                                    <div className="relative">
+                                        <Hash className="absolute left-3 top-3 text-gray-400" size={18} />
+                                        <input
+                                            type="url"
+                                            name="github"
+                                            className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                            placeholder="https://github.com/yourusername"
+                                            value={formData.github}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* Status Messages */}
                             {errorMessage && (
                                 <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm font-medium animate-pulse border border-red-100">
@@ -334,8 +357,8 @@ export default function Register() {
                                 type="submit"
                                 disabled={loading}
                                 className={`w-full py-4 rounded-xl font-bold text-white text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 ${loading
-                                        ? 'bg-gray-400 cursor-not-allowed'
-                                        : 'bg-ieee-blue hover:bg-blue-700'
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-ieee-blue hover:bg-blue-700'
                                     }`}
                             >
                                 {loading ? (

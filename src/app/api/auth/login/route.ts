@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { authenticateUser } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function POST(request: Request) {
     try {
@@ -13,13 +13,9 @@ export async function POST(request: Request) {
             );
         }
 
-        const user = await authenticateUser(username, password);
+        const user = await GoogleSheetService.authenticateUser(username, password);
 
         if (user) {
-            // In a real production app, checking credentials via Sheet is slow but secure enough for this.
-            // We should return a session token or similar, but for simplicity we rely on client state
-            // or set a cookie here. Given the scope, a simple success response is likely fine,
-            // and the client can store the user details in Context/LocalStorage.
             return NextResponse.json({ success: true, user });
         } else {
             return NextResponse.json(

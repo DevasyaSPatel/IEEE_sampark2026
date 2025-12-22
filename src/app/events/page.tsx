@@ -107,10 +107,10 @@ export default function EventsPage() {
                                 <Lightbulb size={16} /> Featured Competition
                             </div>
                             <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-                                National Poster Presentation
+                                Poster Presentation
                             </h2>
                             <p className="text-blue-100 text-lg mb-8 leading-relaxed">
-                                Showcase your research and innovative ideas on a national platform.
+                                Showcase your research and innovative ideas on a big platform.
                                 Join us to present your work across five diverse themes impacting the future of technology.
                             </p>
                             <Link

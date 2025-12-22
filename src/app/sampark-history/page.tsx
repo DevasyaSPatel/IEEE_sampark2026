@@ -45,7 +45,7 @@ export default function HistoryPage() {
                     {/* Updated Title and Content */}
                     <h1 className="text-4xl py-5 md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-ieee-blue">About SAMPARK</h1>
                     <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        SAMPARK is the flagship annual event of the IEEE Gujarat Section, serving as a hub for networking, collaboration, and student empowerment since 2006.
+                        Sampark is the flagship regional event of the IEEE Gujarat Section, envisioned to Reach Out and Engage the IEEE community by fostering technical excellence, collaboration, and innovation. The event serves as a common platform for students, professionals, researchers, and IEEE leaders to connect, learn, and grow together.
                     </p>
                 </div>
 

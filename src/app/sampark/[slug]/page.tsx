@@ -13,6 +13,9 @@ type PublicUser = {
     slug: string;
     role: string;
     connections?: number;
+    year?: string;
+    department?: string;
+    university?: string;
     // Add other public fields
 };
 
@@ -130,27 +133,29 @@ export default function PublicProfile({ params }: { params: Promise<{ slug: stri
         name: profile.name,
         theme: profile.theme,
         connections: profile.connections || 0,
-        bio: profile.bio
+        bio: profile.bio,
+        year: profile.year,
+        department: profile.department,
+        university: profile.university
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]">
-            {/* Background Effects matching other page for consistency */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-purple-900/20 blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 blur-[100px] rounded-full"></div>
-            </div>
+        <div className="min-h-screen bg-[#F8FAFC]">
+            {/* Academic Header */}
+            <header className="w-full bg-[#002855] py-4 px-6 shadow-none">
+                <div className="max-w-4xl mx-auto flex justify-between items-center">
+                    <div className="flex flex-col">
+                        <h1 className="text-white font-bold text-lg leading-tight tracking-wide">SAMPARK 2026</h1>
+                        <span className="text-blue-200/80 text-xs uppercase tracking-wider font-medium">Official Participant Profile</span>
+                    </div>
+                    <button onClick={() => router.push(currentUser ? '/dashboard' : '/login')} className="text-xs font-bold text-white border border-white/30 px-4 py-2 hover:bg-white/10 transition-colors uppercase tracking-wider">
+                        {currentUser ? 'Dashboard' : 'Login'}
+                    </button>
+                </div>
+            </header>
 
-            {/* Nav */}
-            <nav className="fixed top-0 w-full z-50 px-4 md:px-6 py-4 flex justify-between items-center bg-transparent">
-                <div className="text-xl font-bold text-white">Sampark 2026</div>
-                <button onClick={() => router.push(currentUser ? '/dashboard' : '/login')} className="text-sm font-bold text-blue-300 hover:text-blue-200 border border-white/20 px-4 py-1.5 rounded-full hover:bg-white/10 transition-all uppercase">
-                    {currentUser ? 'Dashboard' : 'Login'}
-                </button>
-            </nav>
-
-            {/* Profile Card */}
-            <div className="w-full flex justify-center p-4">
+            {/* Profile Content Container */}
+            <main className="w-full max-w-[500px] mx-auto pt-8 pb-12 px-4 md:px-0">
                 <ParticipantProfileCard
                     user={cardUser}
                     isLoggedIn={isLoggedIn}
@@ -158,7 +163,7 @@ export default function PublicProfile({ params }: { params: Promise<{ slug: stri
                     isLoading={sending}
                     onConnect={handleConnect}
                 />
-            </div>
+            </main>
         </div>
     );
 }

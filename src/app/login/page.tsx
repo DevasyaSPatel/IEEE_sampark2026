@@ -32,28 +32,12 @@ export default function Login() {
         setError('');
 
         try {
-            const res = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: formData.email,
-                    password: formData.password
-                })
-            });
-
-            const data = await res.json();
-
-            if (res.ok && data.success) {
-                // Login successful
-                login(data.user);
-                router.push('/dashboard');
-            } else {
-                setError(data.message || 'Login failed');
-                setLoading(false);
-            }
-        } catch (err) {
+            await login(formData.email, formData.password);
+            router.push('/dashboard');
+        } catch (err: any) {
             console.error('Login error:', err);
-            setError('An unexpected error occurred. Please try again.');
+            setError(err.message || 'An unexpected error occurred. Please try again.');
+        } finally {
             setLoading(false);
         }
     };

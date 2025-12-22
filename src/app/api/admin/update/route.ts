@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { updateUserDetails } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function POST(request: Request) {
     const body = await request.json();
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     }
 
     try {
-        await updateUserDetails(rowIndex, data);
+        await GoogleSheetService.updateUserDetails(rowIndex, data);
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error("Update error:", error);

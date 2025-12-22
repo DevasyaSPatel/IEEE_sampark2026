@@ -1,6 +1,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getConnectionStatus } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        const status = await getConnectionStatus(sourceEmail, targetEmail);
+        const status = await GoogleSheetService.getConnectionStatus(sourceEmail, targetEmail);
         return NextResponse.json({ status });
     } catch (error) {
         console.error('Error checking status:', error);

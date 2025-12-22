@@ -251,6 +251,7 @@ export default function AdminDashboard() {
                             <thead>
                                 <tr className="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-semibold tracking-wider">
                                     <th className="px-6 py-4">User Identity</th>
+                                    <th className="px-6 py-4">Transaction ID</th>
                                     <th className="px-6 py-4">Registered Events</th>
                                     <th className="px-6 py-4">Status</th>
                                     <th className="px-6 py-4 text-right">Actions</th>
@@ -272,6 +273,11 @@ export default function AdminDashboard() {
                                                     <span className="font-semibold text-ieee-navy">{user.name}</span>
                                                     <span className="text-sm text-gray-500">{user.email}</span>
                                                 </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className="font-mono text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">
+                                                    {user.transactionId || 'N/A'}
+                                                </span>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className="text-sm text-gray-600 font-medium">{user.theme || '—'}</span>

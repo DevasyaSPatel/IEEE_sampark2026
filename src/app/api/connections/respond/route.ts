@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateConnectionStatus } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function POST(request: NextRequest) {
     try {
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         // E.g. I am User B (Target), I accept User A (Source).
         // Front-end should call with sourceEmail=A, targetEmail=B.
 
-        const success = await updateConnectionStatus(sourceEmail, targetEmail, status);
+        const success = await GoogleSheetService.updateConnectionStatus(sourceEmail, targetEmail, status);
 
         if (success) {
             return NextResponse.json({ success: true });

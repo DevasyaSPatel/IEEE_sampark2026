@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllUsers } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function GET(request: Request) {
     // Simple Admin Auth Check
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     }
 
     try {
-        const users = await getAllUsers();
+        const users = await GoogleSheetService.getAllUsers();
         return NextResponse.json({ users });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUser, addConnection, updateUserDetails } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function GET(
     request: NextRequest,
@@ -8,7 +8,7 @@ export async function GET(
     const { id } = await params;
     // Decode ID if it's an email (URLs might encode it)
     const decodedId = decodeURIComponent(id);
-    const user = await getUser(decodedId);
+    const user = await GoogleSheetService.getUser(decodedId);
 
     if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -39,16 +39,15 @@ export async function POST(
         let finalSourcePhone = sourcePhone;
 
         if (sourceEmail) {
-            const sourceUser = await getUser(sourceEmail);
+            const sourceUser = await GoogleSheetService.getUser(sourceEmail);
             if (sourceUser) {
                 finalSourceName = sourceUser.name;
                 // Use phone if available in profile, else keep request phone
-                // (Profile usually doesn't show phone in this User type, but let's assume valid)
             }
         }
 
         // 2. Add Connection: Source -> Target (So Source remembers Target)
-        const forwardSuccess = await addConnection({
+        const forwardSuccess = await GoogleSheetService.addConnection({
             sourceEmail,
             targetEmail,
             sourceName: finalSourceName,
@@ -57,47 +56,20 @@ export async function POST(
         });
 
         // 3. Mutual Connection: Target -> Source (So Target remembers Source immediately)
-        // 3. Mutual Connection: Target -> Source (So Target remembers Source immediately)
-        // Only if we have a valid sourceEmail (registered user)
         let mutualSuccess = true;
-        /* 
-        // DISABLED: This creates a duplicate "ghost" request (B->A pending) when A->B is created.
-        // We should strictly rely on the single request A->B.
-        if (sourceEmail) {
-            const targetUser = await getUser(targetEmail);
-            if (targetUser) {
-                mutualSuccess = await addConnection({
-                    sourceEmail: targetEmail,      // Target "views" Source
-                    targetEmail: sourceEmail,      // Source is the one receiving this entry? 
-                    sourceName: targetUser.name,
-                    note: "Mutual Connection via NFC"
-                });
-            }
-        }
-        */
 
         if (forwardSuccess) return NextResponse.json({ success: true, mutual: mutualSuccess });
         return NextResponse.json({ error: "Failed to connect" }, { status: 500 });
     } else {
         // Handle Profile Update
-        // We need to map the row index. But `updateUserDetails` needs rowIndex.
-        // `getUser` returns ID but not rowIndex directly in standard return...
-        // Wait, `getUser` in `google-sheets.ts` returns object. I need to enable getting rowIndex or find it again.
-        // Let's refactor `getUser` to return rowIndex? Or just fetch allUsers here to find index.
-        // Optimization: `getUser` already fetches all rows.
 
-        // Actually, `getUser` in my previous edit didn't return `rowIndex`.
-        // I should fix that or re-fetch locally.
-        // Re-fetching locally is safer for now.
-
-        const { getAllUsers } = await import('@/lib/google-sheets');
-        const users = await getAllUsers();
+        const users = await GoogleSheetService.getAllUsers();
         const user = users.find(u => u.email === targetEmail);
 
         if (user) {
-            await updateUserDetails(user.rowIndex, body);
+            await GoogleSheetService.updateUserDetails(user.rowIndex, body);
             // Return updated user
-            const updatedUser = await getUser(targetEmail);
+            const updatedUser = await GoogleSheetService.getUser(targetEmail);
             return NextResponse.json(updatedUser);
         } else {
             return NextResponse.json({ error: "User not found for update" }, { status: 404 });

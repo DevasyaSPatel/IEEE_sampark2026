@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserBySlug } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function GET(
     request: NextRequest,
@@ -12,7 +12,7 @@ export async function GET(
     }
 
     try {
-        const user = await getUserBySlug(slug);
+        const user = await GoogleSheetService.getUserBySlug(slug);
 
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });

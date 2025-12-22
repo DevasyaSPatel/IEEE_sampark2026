@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addConnection, getUser, getConnectionStatus } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function POST(request: NextRequest) {
     try {
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
         }
 
         // 1. Validate Source User
-        const sourceUser = await getUser(sourceEmail);
+        const sourceUser = await GoogleSheetService.getUser(sourceEmail);
         if (!sourceUser) {
             console.error("Source user not found:", sourceEmail); // DEBUG LOG
             return NextResponse.json({ error: `User ${sourceEmail} not registered in system` }, { status: 404 });
@@ -22,12 +22,12 @@ export async function POST(request: NextRequest) {
         }
 
         // 2. Check for existing connection
-        const status = await getConnectionStatus(sourceEmail, targetEmail);
+        const status = await GoogleSheetService.getConnectionStatus(sourceEmail, targetEmail);
         if (status !== 'None') {
             return NextResponse.json({ error: `Connection already exists (Status: ${status})` }, { status: 409 });
         }
 
-        const success = await addConnection({
+        const success = await GoogleSheetService.addConnection({
             sourceEmail,
             targetEmail,
             note,

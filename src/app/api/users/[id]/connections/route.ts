@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserConnections } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function GET(
     request: NextRequest,
@@ -12,6 +12,6 @@ export async function GET(
     // to ensure only the user themselves can see their connections.
     // For this hackathon/prototype, we'll trust the frontend.
 
-    const connections = await getUserConnections(decodedId);
+    const connections = await GoogleSheetService.getUserConnections(decodedId);
     return NextResponse.json(connections);
 }

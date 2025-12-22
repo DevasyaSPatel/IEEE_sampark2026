@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { appendUserAndGetCredentials } from '@/lib/google-sheets';
+import { GoogleSheetService } from '@/lib/googleSheets/service';
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
 
         // 1. Append to Sheet and Generate Credentials
-        const credentials = await appendUserAndGetCredentials(body);
+        const credentials = await GoogleSheetService.appendUserRegistration(body);
 
         if (!credentials) {
             return NextResponse.json({ message: 'Failed to register' }, { status: 500 });
