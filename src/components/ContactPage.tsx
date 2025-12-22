@@ -15,10 +15,10 @@ export default function ContactPage() {
                 </div>
 
                 {/* Contact Cards Grid */}
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-12">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 mb-12">
                     {/* Card 1: General Inquiries (Email) */}
                     <a
-                        href="mailto:ieee.sampark2026@gmail.com"
+                        href="mailto:ieee@sot.pdpu.ac.in"
                         className="flex flex-col items-center p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 group border border-gray-100"
                     >
                         <div className="p-4 bg-blue-50 rounded-full mb-4 group-hover:bg-[#00629B] transition-colors duration-300">
@@ -28,35 +28,13 @@ export default function ContactPage() {
                             Email Us
                         </h3>
                         <p className="text-gray-600 text-center">
-                            ieee.sampark2026@gmail.com
+                            ieee@sot.pdpu.ac.in
                             <br />
                             <span className="text-sm text-gray-400">(General Inquiries)</span>
                         </p>
                     </a>
 
-                    {/* Card 2: Helpline (Phone) */}
-                    <div className="flex flex-col items-center p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 group border border-gray-100">
-                        <div className="p-4 bg-blue-50 rounded-full mb-4 group-hover:bg-[#00629B] transition-colors duration-300">
-                            <Phone className="w-8 h-8 text-[#00629B] group-hover:text-white transition-colors duration-300" />
-                        </div>
-                        <h3 className="text-xl font-bold text-[#002855] mb-4 group-hover:text-[#00629B] transition-colors">
-                            Call Us
-                        </h3>
-                        <div className="flex flex-col space-y-3 w-full">
-                            <span
-                                className="w-full py-2 px-4 text-center rounded-lg bg-gray-50 text-[#002855] font-medium text-lg"
-                            >
-                                +91 9512343219
-                            </span>
-                            <span
-                                className="w-full py-2 px-4 text-center rounded-lg bg-gray-50 text-[#002855] font-medium text-lg"
-                            >
-                                +91 7383847528
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Card 3: Visit Us (Location) */}
+                    {/* Card 2: Visit Us (Location) */}
                     <a
                         href="https://maps.google.com/?q=Pandit+Deendayal+Energy+University"
                         target="_blank"

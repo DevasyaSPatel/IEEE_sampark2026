@@ -26,10 +26,10 @@ export async function authenticateUser(username: string, pass: string) {
     if (!SHEET_ID) throw new Error("Missing GOOGLE_SHEET_ID");
 
     try {
-        // Fetching range A:L from 'Form Responses 1'
+        // Fetching range A:M from 'Form Responses 1'
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:N', // Fetch up to N for password check
+            range: 'Form Responses 1!A:M', // Fetch up to M for password check
         });
 
         const rows = response.data.values;
@@ -39,15 +39,15 @@ export async function authenticateUser(username: string, pass: string) {
             const emailMatch = row[2]?.trim() === username.trim();
             if (!emailMatch) return false;
 
-            // Check Password in Column N (Index 13) - New Schema
-            const passN = row[13]?.trim();
-            if (passN && passN === pass.trim()) return true;
+            // Check Password in Column M (Index 12) - New Schema (Shifted Left)
+            // Previously N(13), shifted -1 due to TeamName deletion
+            const passM = row[12]?.trim();
+            if (passM && passM === pass.trim()) return true;
 
-            // Fallback: Check Password in Column L (Index 11) - Old Schema
-            // Only if N is empty or didn't match (and we want to support old users who haven't been migrated)
-            // Note: In new schema, L is IEEE Membership. We assume IEEE number won't coincidentally match the password.
-            const passL = row[11]?.trim();
-            if (passL && passL === pass.trim()) return true;
+            // Fallback: Check Password in Column K (Index 10) - Old Schema
+            // Previously L(11), shifted -1
+            const passK = row[10]?.trim();
+            if (passK && passK === pass.trim()) return true;
 
             return false;
         });
@@ -97,7 +97,7 @@ export async function appendUserAndGetCredentials(userData: any) {
 
     await sheets.spreadsheets.values.append({
         spreadsheetId: SHEET_ID,
-        range: 'Form Responses 1!A:S', // Extended to S
+        range: 'Form Responses 1!A:R', // Extended to R (was S)
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [[
@@ -110,16 +110,16 @@ export async function appendUserAndGetCredentials(userData: any) {
                 userData.year || '',         // G
                 userData.theme || '',        // H
                 userData.participationType || '', // I
-                userData.teamName || '',     // J
-                userData.transactionId || '', // K
-                userData.ieeeMembershipNumber || '', // L
-                'Pending',                   // M: Status (Fixed)
-                password,                    // N: Password (Fixed)
-                userData.anythingElse || '', // O: Anything Else (Moved)
-                '',                          // P: LinkedIn (Moved)
-                slug,                        // Q: Slug (Fixed)
-                '',                          // R: Instagram (Moved)
-                userData.github || ''          // S: GitHub Profile URL (Mapped from userData.github)
+                // Team Name (J) Removed
+                userData.transactionId || '', // J (was K)
+                userData.ieeeMembershipNumber || '', // K (was L)
+                'Pending',                   // L: Status (was M)
+                password,                    // M: Password (was N)
+                userData.anythingElse || '', // N: Anything Else (was O)
+                '',                          // O: LinkedIn (was P)
+                slug,                        // P: Slug (was Q)
+                '',                          // Q: Instagram (was R)
+                userData.github || ''        // R: GitHub Profile URL (was S)
             ]],
         },
     });
@@ -133,7 +133,7 @@ export async function getAllUsers() {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:S', // Fetch up to S
+            range: 'Form Responses 1!A:R', // Fetch up to R
         });
 
         const rows = response.data.values;
@@ -150,16 +150,16 @@ export async function getAllUsers() {
             year: row[6],
             theme: row[7],
             participationType: row[8],
-            teamName: row[9],
-            transactionId: row[10] || '', // K
-            ieeeMembershipNumber: row[11] || '', // L
-            status: row[12] || 'Pending', // M
-            // Password N is 13
-            anythingElse: row[14], // O
-            linkedin: row[15] || '', // P
-            slug: row[16] || '', // Q
-            instagram: row[17] || '', // R
-            github: row[18] || '', // S
+            // TeamName removed
+            transactionId: row[9] || '', // J
+            ieeeMembershipNumber: row[10] || '', // K
+            status: row[11] || 'Pending', // L
+            // Password M is 12
+            anythingElse: row[13], // N
+            linkedin: row[14] || '', // O
+            slug: row[15] || '', // P
+            instagram: row[16] || '', // Q
+            github: row[17] || '', // R
         }));
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -172,7 +172,7 @@ export async function updateUserStatus(rowIndex: number, newStatus: string) {
 
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!M${rowIndex}`, // Status at M
+        range: `Form Responses 1!L${rowIndex}`, // Status at L (was M)
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [[newStatus]]
@@ -192,42 +192,41 @@ export async function updateUserDetails(rowIndex: number, data: any) {
         data.year,
         data.theme,
         data.participationType,
-        data.teamName
+        // data.teamName Removed
     ];
 
-    // 1. Update A..J (Name..TeamName)
+    // 1. Update A..I (Name..PartType) - Range B:I
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!B${rowIndex}:J${rowIndex}`,
+        range: `Form Responses 1!B${rowIndex}:I${rowIndex}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [mainValues]
         }
     });
 
-    // 2. Update anythingElse (O) and LinkedIn (P)
-    // O=Anything, P=LinkedIn
+    // 2. Update anythingElse (N) and LinkedIn (O)
     const middleValues = [
         data.anythingElse || '',
         data.linkedin || ''
     ];
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!O${rowIndex}:P${rowIndex}`,
+        range: `Form Responses 1!N${rowIndex}:O${rowIndex}`, // Was O:P
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [middleValues]
         }
     });
 
-    // 3. Update Instagram (R) and GitHub (S) - Skip Q(Slug)
+    // 3. Update Instagram (Q) and GitHub (R) - Skip P(Slug)
     const endValues = [
         data.instagram || '',
         data.github || ''
     ];
     await sheets.spreadsheets.values.update({
         spreadsheetId: SHEET_ID,
-        range: `Form Responses 1!R${rowIndex}:S${rowIndex}`,
+        range: `Form Responses 1!Q${rowIndex}:R${rowIndex}`, // Was R:S
         valueInputOption: 'USER_ENTERED',
         requestBody: {
             values: [endValues]
@@ -378,7 +377,7 @@ export async function getPassword(rowIndex: number) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: `Form Responses 1!N${rowIndex}`, // Password moved to N
+            range: `Form Responses 1!M${rowIndex}`, // Password moved to M (was N)
         });
 
         return response.data.values?.[0]?.[0] || null;
@@ -393,7 +392,7 @@ export async function getUser(email: string) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:S',
+            range: 'Form Responses 1!A:R', // A:R (was A:S)
         });
 
         const rows = response.data.values;
@@ -410,13 +409,13 @@ export async function getUser(email: string) {
                 phone: userRow[3] || '',
                 role: 'user',
                 theme: userRow[7] || '',
-                bio: userRow[14] || '', // O (14)
-                transactionId: userRow[10] || '', // K
-                ieeeMembershipNumber: userRow[11] || '', // L
-                linkedin: userRow[15] || '', // P (15)
-                slug: userRow[16] || '', // Q (16)
-                instagram: userRow[17] || '', // R (17)
-                github: userRow[18] || '', // S (18)
+                bio: userRow[13] || '', // N (was O, index 14 -> 13)
+                transactionId: userRow[9] || '', // J (was K, index 10 -> 9)
+                ieeeMembershipNumber: userRow[10] || '', // K (was L, index 11 -> 10)
+                linkedin: userRow[14] || '', // O (was P, index 15 -> 14)
+                slug: userRow[15] || '', // P (was Q, index 16 -> 15)
+                instagram: userRow[16] || '', // Q (was R, index 17 -> 16)
+                github: userRow[17] || '', // R (was S, index 18 -> 17)
                 participationType: userRow[8] || '',
                 connections: connections,
             };
@@ -468,14 +467,14 @@ export async function getUserBySlug(slug: string) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:S',
+            range: 'Form Responses 1!A:R', // A:R (was A:S)
         });
 
         const rows = response.data.values;
         if (!rows || rows.length === 0) return null;
 
-        // Find row where Column Q (index 16) matches slug
-        const userRow = rows.find((row: string[]) => row[16]?.trim() === slug.trim());
+        // Find row where Column P (index 15) matches slug (was Q/16)
+        const userRow = rows.find((row: string[]) => row[15]?.trim() === slug.trim());
 
         if (userRow) {
             // For public profile, fetch connection count
@@ -488,11 +487,11 @@ export async function getUserBySlug(slug: string) {
                 // email: userRow[2], // Maybe hide email for public profile?
                 role: 'user',
                 theme: userRow[7] || '',
-                bio: userRow[14] || '', // O
-                linkedin: userRow[15] || '', // P
-                slug: userRow[16] || '', // Q
-                instagram: userRow[17] || '', // R
-                github: userRow[18] || '', // S
+                bio: userRow[13] || '', // N (was O)
+                linkedin: userRow[14] || '', // O (was P)
+                slug: userRow[15] || '', // P (was Q)
+                instagram: userRow[16] || '', // Q (was R)
+                github: userRow[17] || '', // R (was S)
                 participationType: userRow[8] || '',
                 connections: connectionsCount,
             };
@@ -510,7 +509,7 @@ export async function searchUsers(query: string) {
     try {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: 'Form Responses 1!A:S',
+            range: 'Form Responses 1!A:R', // A:R
         });
 
         const rows = response.data.values;
@@ -522,13 +521,13 @@ export async function searchUsers(query: string) {
             .filter((row: string[]) => {
                 const name = row[1]?.toLowerCase() || '';
                 const email = row[2]?.toLowerCase() || '';
-                // const handle = row[16]?.toLowerCase() || ''; // Slug is random, so searching by it is rare but okay.
+                // const handle = row[15]?.toLowerCase() || ''; // Slug P (15)
                 return name.includes(lowerQuery) || email.includes(lowerQuery);
             })
             .map((row: string[]) => ({
                 name: row[1],
                 theme: row[7] || '',
-                slug: row[16] || '', // Q
+                slug: row[15] || '', // P (was Q)
                 // Do not return email/phone in search results for privacy
             }))
             .slice(0, 10); // Limit results
@@ -551,21 +550,11 @@ export async function updateConnectionStatus(sourceEmail: string, targetEmail: s
     if (!rows) return false;
 
     // Find row: Source=SourceEmail AND Target=TargetEmail
-    // Note: If I am "Accepting", I am the Target in the DB row?
-    // When A requests B: Source=A, Target=B, Status=Pending.
-    // B accepts: We need to find Source=A, Target=B and set Status=Accepted.
-
     const rowIndex = rows.findIndex((row: string[]) =>
         row[0]?.trim() === sourceEmail.trim() && row[1]?.trim() === targetEmail.trim()
     );
 
     if (rowIndex !== -1) {
-        // 1-indexed, +1 for header if we searched full sheet? 
-        // We searched 'Connections!A:G'. rows[0] is typically header if we included it?
-        // Wait, `values.get` usually returns headers if they exist.
-        // Assuming headers are row 1. rows array index 0 is headers.
-        // So actual sheet row is rowIndex + 1.
-
         const sheetRow = rowIndex + 1;
 
         await sheets.spreadsheets.values.update({

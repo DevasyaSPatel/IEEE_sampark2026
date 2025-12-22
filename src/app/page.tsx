@@ -256,12 +256,12 @@ export default function Home() {
       {/* Achievements Section */}
       <section className="py-12 bg-ieee-navy text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-blue-900/50">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center divide-x divide-blue-900/50">
             <div className="flex flex-col items-center px-4">
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
                 <Users size={24} />
               </div>
-              <span className="text-3xl font-bold mb-1">100+</span>
+              <span className="text-3xl font-bold mb-1">80+</span>
               <span className="text-blue-200 text-sm">Members</span>
             </div>
             <div className="flex flex-col items-center px-4">
@@ -270,13 +270,6 @@ export default function Home() {
               </div>
               <span className="text-3xl font-bold mb-1"> 25+</span>
               <span className="text-blue-200 text-sm">Events this year</span>
-            </div>
-            <div className="flex flex-col items-center px-4">
-              <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
-                <Award size={24} />
-              </div>
-              <span className="text-3xl font-bold mb-1">15+</span>
-              <span className="text-blue-200 text-sm">Awards</span>
             </div>
             <div className="flex flex-col items-center px-4">
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
@@ -292,7 +285,7 @@ export default function Home() {
       <footer className="bg-gray-50 border-t border-gray-200 py-12 text-center text-gray-500 text-sm">
         <div className="max-w-7xl mx-auto px-4">
           <p className="mb-2">© 2026 IEEE Student Branch PDEU. All rights reserved.</p>
-          <p className="mb-2">Created by Devasya Patel (devasyaspatel@gmail.com)</p>
+          <p className="mb-2">Created by Devasya Patel  <a href="https://www.linkedin.com/in/devasya-patel/" target="_blank" rel="noopener noreferrer">(LinkedIn)</a></p>
         </div>
       </footer>
     </div>

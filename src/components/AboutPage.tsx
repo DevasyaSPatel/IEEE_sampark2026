@@ -155,7 +155,7 @@ export default function AboutPage() {
                         Connect with us to start your journey.
                     </h2>
                     <a
-                        href="https://www.linkedin.com/company/ieee-pdeu-sb/"
+                        href="https://www.linkedin.com/company/ieee-student-branch-pdeu/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center bg-white text-blue-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full transition-colors shadow-lg"
