@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useExternalLinks } from '@/hooks/useExternalLinks';
 import { ArrowLeft, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
 
 export default function Login() {
@@ -14,6 +15,7 @@ export default function Login() {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const { links } = useExternalLinks();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -129,7 +131,7 @@ export default function Login() {
 
                     <div className="mt-8 pt-6 border-t border-gray-100 text-center">
                         <p className="text-sm text-gray-500">
-                            Don't have an account? <Link href="/register" className="font-bold text-ieee-blue hover:text-blue-700 hover:underline transition-colors inline-flex items-center gap-1">Register <ArrowRight size={14} /></Link>
+                            Don't have an account? <button onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')} className="font-bold text-ieee-blue hover:text-blue-700 hover:underline transition-colors inline-flex items-center gap-1">Register <ArrowRight size={14} /></button>
                         </p>
                     </div>
                 </div>

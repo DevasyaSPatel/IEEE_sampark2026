@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { ArrowLeft, MapPin, Ticket } from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import { useExternalLinks } from '@/hooks/useExternalLinks';
 
 export default function HistoryPage() {
+    const { links } = useExternalLinks();
     // Reversed chronology: 2026 at the top
     const samparkHistory = [
         { year: "2026", edition: "21st", venue: "PDEU, Gandhinagar", highlight: "The Next Chapter. Join us for the future of connection." },
@@ -115,13 +117,13 @@ export default function HistoryPage() {
                     {/* Moved CTA slightly down to not overlap with the first item too much if needed, but keeping original positioning logic */}
                     <div className="relative z-30 flex justify-center mt-[-60px] pb-20">
                         <div className="bg-white p-3 rounded-full shadow-xl border border-blue-50">
-                            <Link
-                                href="/register"
+                            <button
+                                onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                                 className="group bg-ieee-blue hover:bg-blue-700 text-white text-lg font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all flex items-center gap-3"
                             >
                                 <Ticket size={24} className="group-hover:-rotate-12 transition-transform" />
                                 Register for Sampark 2026 at PDEU
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>

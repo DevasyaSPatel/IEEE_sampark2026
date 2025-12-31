@@ -558,7 +558,10 @@ export const GoogleSheetService = {
         const rows = response.data.values;
         if (!rows || rows.length === 0) return null;
 
-        const userRow = rows.find((row: string[]) => row[SHEET_CONFIG.INDEX.SLUG]?.trim() === slug.trim());
+        const userRow = rows.find((row: string[]) => {
+            const sheetSlug = row[SHEET_CONFIG.INDEX.SLUG];
+            return sheetSlug && sheetSlug.toString().trim().toLowerCase() === slug.trim().toLowerCase();
+        });
 
         if (userRow) {
             // Fetch connection count via email

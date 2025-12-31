@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { Calendar, Cpu, Radio, Zap, Activity, Users, Lightbulb, Bot } from 'lucide-react';
 import Link from 'next/link';
 import ConferenceItinerary from '@/components/ConferenceItinerary';
+import { useExternalLinks } from '@/hooks/useExternalLinks';
 
 export default function EventsPage() {
+    const { links } = useExternalLinks();
     const chapters = [
         {
             title: "SB & Computer Society",
@@ -113,12 +115,12 @@ export default function EventsPage() {
                                 Showcase your research and innovative ideas on a big platform.
                                 Join us to present your work across five diverse themes impacting the future of technology.
                             </p>
-                            <Link
-                                href="/register"
+                            <button
+                                onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                                 className="inline-block bg-white text-ieee-blue font-bold px-8 py-3 rounded-full hover:bg-blue-50 transition-colors shadow-md"
                             >
                                 Register to Present
-                            </Link>
+                            </button>
                         </div>
 
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
@@ -170,12 +172,12 @@ export default function EventsPage() {
                                     ))}
                                 </div>
                                 <div className="mt-8 pt-4 border-t border-gray-50">
-                                    <Link
-                                        href="/register"
+                                    <button
+                                        onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                                         className="text-sm font-bold text-ieee-blue hover:text-blue-800 flex items-center gap-1 group-hover:gap-2 transition-all"
                                     >
                                         View Details & Register <span aria-hidden="true">&rarr;</span>
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         </motion.div>

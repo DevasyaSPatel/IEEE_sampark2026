@@ -27,11 +27,12 @@ export const SHEET_CONFIG = {
         UNIVERSITY: 'E',
         DEPARTMENT: 'F',
         YEAR: 'G',
-        EVENT_MORNING: 'H', // Was 'Theme'
-        EVENT_AFTERNOON: 'I', // Was 'ParticipationType'
+        SELECTED_EVENT: 'H', // Was EVENT_MORNING
+        POSTER_THEME: 'I', // Was EVENT_AFTERNOON
         TRANSACTION_ID: 'J', // Shifted from K
         IEEE_MEMBERSHIP: 'K', // Shifted from L
-        LINKEDIN: 'M',
+        LINKEDIN: 'N',
+        IS_POSTER_PRESENTING: 'M', // New / Was Password in user perception
         STATUS: 'O', // Shifted from M
         PASSWORD: 'P', // Shifted from N
         GITHUB: 'Q', // Replaces ANYTHING_ELSE
@@ -48,16 +49,21 @@ export const SHEET_CONFIG = {
             UNIVERSITY: col(this.COLUMNS.UNIVERSITY),
             DEPARTMENT: col(this.COLUMNS.DEPARTMENT),
             YEAR: col(this.COLUMNS.YEAR),
-            EVENT_MORNING: col(this.COLUMNS.EVENT_MORNING),
-            EVENT_AFTERNOON: col(this.COLUMNS.EVENT_AFTERNOON),
+            SELECTED_EVENT: col(this.COLUMNS.SELECTED_EVENT),
+            POSTER_THEME: col(this.COLUMNS.POSTER_THEME),
             TRANSACTION_ID: col(this.COLUMNS.TRANSACTION_ID),
             IEEE_MEMBERSHIP: col(this.COLUMNS.IEEE_MEMBERSHIP),
+            IS_POSTER_PRESENTING: col(this.COLUMNS.IS_POSTER_PRESENTING),
             STATUS: col(this.COLUMNS.STATUS),
             PASSWORD: col(this.COLUMNS.PASSWORD),
             GITHUB: col(this.COLUMNS.GITHUB),
             LINKEDIN: col(this.COLUMNS.LINKEDIN),
-            SLUG: col(this.COLUMNS.SLUG),
             INSTAGRAM: col(this.COLUMNS.INSTAGRAM)
         };
     }
+};
+
+export const EXTERNAL_LINKS = {
+    REGISTRATION_FORM: "https://docs.google.com/forms/d/e/1FAIpQLScg0RwRMxFC2dbbkbNRfiv98E8uLkByGuGrZx-3fFNtALaNGA/viewform?usp=dialog",
+    WHATSAPP_GROUP: "https://chat.whatsapp.com/your-link-here"
 };

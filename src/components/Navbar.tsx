@@ -6,11 +6,13 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { useAuth } from '@/context/AuthContext';
+import { useExternalLinks } from '@/hooks/useExternalLinks';
 
 export default function Navbar() {
     const { user } = useAuth();
     const isLoggedIn = !!user;
     const [isOpen, setIsOpen] = useState(false);
+    const { links } = useExternalLinks();
 
     return (
         <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
@@ -54,12 +56,12 @@ export default function Navbar() {
                                     >
                                         Login
                                     </Link>
-                                    <Link
-                                        href="/register"
+                                    <button
+                                        onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                                         className="bg-ieee-blue hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-md hover:shadow-lg"
                                     >
                                         Register Now
-                                    </Link>
+                                    </button>
                                 </>
                             )}
                         </div>
@@ -111,12 +113,12 @@ export default function Navbar() {
                                         >
                                             Login
                                         </Link>
-                                        <Link
-                                            href="/register"
+                                        <button
+                                            onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                                             className="block w-full text-center bg-ieee-blue text-white px-4 py-3 rounded-lg font-semibold shadow-md active:scale-95 transition-transform"
                                         >
                                             Register Now
-                                        </Link>
+                                        </button>
                                     </div>
                                 )}
                             </div>

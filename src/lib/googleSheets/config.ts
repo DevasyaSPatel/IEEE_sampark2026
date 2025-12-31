@@ -31,8 +31,8 @@ export const SHEET_CONFIG = {
         POSTER_THEME: 'I', // Was EVENT_AFTERNOON
         TRANSACTION_ID: 'J', // Shifted from K
         IEEE_MEMBERSHIP: 'K', // Shifted from L
-        LINKEDIN: 'M',
-        IS_POSTER_PRESENTING: 'N', // New / Was Password in user perception
+        IS_POSTER_PRESENTING: 'M', // Swapped with LinkedIn
+        LINKEDIN: 'N', // Swapped with IsPosterPresenting
         STATUS: 'O', // Shifted from M
         PASSWORD: 'P', // Shifted from N
         GITHUB: 'Q', // Replaces ANYTHING_ELSE
@@ -62,4 +62,9 @@ export const SHEET_CONFIG = {
             INSTAGRAM: col(this.COLUMNS.INSTAGRAM)
         };
     }
+};
+
+export const EXTERNAL_LINKS = {
+    REGISTRATION_FORM: "https://docs.google.com/forms/d/e/1FAIpQLScg0RwRMxFC2dbbkbNRfiv98E8uLkByGuGrZx-3fFNtALaNGA/viewform?usp=dialog",
+    WHATSAPP_GROUP: "https://chat.whatsapp.com/your-link-here"
 };

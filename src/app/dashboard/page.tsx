@@ -21,6 +21,7 @@ import Navbar from '@/components/Navbar';
 import RequestsList from '@/components/RequestsList';
 import { useConnectionLogic } from '@/hooks/useConnectionLogic';
 import { useAuth } from '@/context/AuthContext';
+import { useExternalLinks } from '@/hooks/useExternalLinks';
 
 type User = {
     id: string;
@@ -72,6 +73,8 @@ export default function Dashboard() {
     const [nfcError, setNfcError] = useState('');
     const [showSimulateInput, setShowSimulateInput] = useState(false);
     const [simulateEmail, setSimulateEmail] = useState('');
+
+    const { links } = useExternalLinks();
 
     const { acceptedConnections, incomingRequests, sentRequests } = useConnectionLogic(connectionsList);
 
@@ -268,6 +271,28 @@ export default function Dashboard() {
                         {nfcError && <div className="mt-2 text-red-600 bg-red-50 p-2 rounded border border-red-200 text-sm font-medium">{nfcError}</div>}
                     </div>
                     <div className="flex gap-3">
+                        {links?.WHATSAPP_GROUP && (
+                            <button
+                                onClick={() => window.open(links.WHATSAPP_GROUP, '_blank')}
+                                className="flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white px-4 py-2 rounded-lg font-bold shadow-sm transition-all"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="lucide lucide-message-circle"
+                                >
+                                    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                                </svg>
+                                Join WhatsApp Group
+                            </button>
+                        )}
                         <button
                             onClick={scanNFC}
                             className={`px-4 py-2 rounded-lg font-semibold text-white shadow-md transition-all ${isScanning ? 'bg-green-600 animate-pulse' : 'bg-ieee-warning hover:bg-amber-600'}`}
@@ -520,6 +545,6 @@ export default function Dashboard() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

@@ -12,9 +12,12 @@ app.use(express.json());
 
 // Routes
 // We can define a router or mount directly for now based on the task scope.
+import { getConfigLinks } from './src/controllers/configController';
+
 const apiRouter = express.Router();
 
 apiRouter.post('/auth/register', registerUser);
+apiRouter.get('/config/links', getConfigLinks);
 
 // Mount API
 app.use('/api', apiRouter);

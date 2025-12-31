@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
+import { useExternalLinks } from '@/hooks/useExternalLinks';
 import { ArrowRight, Calendar, Users, Star, Bot, Link as LinkIcon, Wifi, Shield, Award, Cpu, Radio, Factory, Sparkles, Zap } from 'lucide-react';
 
 export default function Home() {
+  const { links } = useExternalLinks();
 
 
   const societyLogos = [
@@ -49,12 +51,12 @@ export default function Home() {
               Connecting minds, fostering innovation. Join the premier academic and professional networking event of the year.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/register"
+              <button
+                onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                 className="bg-ieee-blue hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
               >
                 Register for Conference <ArrowRight size={20} />
-              </Link>
+              </button>
               <Link
                 href="/sampark-history"
                 className="bg-white border text-ieee-navy hover:bg-gray-50 border-gray-200 px-8 py-4 rounded-lg text-lg font-semibold transition-all flex items-center justify-center"

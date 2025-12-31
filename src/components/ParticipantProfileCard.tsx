@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { UserPlus, Clock, Check, Calendar, Star, Hash, BookOpen, GraduationCap } from 'lucide-react';
+import { UserPlus, Clock, Check, Calendar, Star, Hash, BookOpen, GraduationCap, Linkedin } from 'lucide-react';
 
 type ConnectionStatus = 'None' | 'Pending' | 'Accepted';
 
@@ -127,27 +127,27 @@ const ParticipantProfileCard: React.FC<ParticipantProfileCardProps> = ({
             <div className="p-6 border-b border-gray-100">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Event Transcript</p>
                 <div className="space-y-3">
-                    {/* Morning */}
-                    {user.theme && (
+                    {/* Morning / Selected Event */}
+                    {user.selectedEvent && (
                         <div className="flex gap-4 items-baseline">
-                            <span className="text-xs font-mono font-bold text-[#00629B] shrink-0">09:00 AM</span>
+                            <span className="text-xs font-mono font-bold text-[#00629B] shrink-0">EVENT</span>
                             <span className="text-sm text-gray-700 leading-relaxed font-medium">
-                                {user.theme} <span className="text-gray-400 ml-1 font-normal">(Track)</span>
+                                {user.selectedEvent} <span className="text-gray-400 ml-1 font-normal">(Track)</span>
                             </span>
                         </div>
                     )}
 
-                    {/* Afternoon */}
-                    {user.participationType && (
+                    {/* Afternoon / Poster Presentation */}
+                    {(user.posterTheme || user.isPosterPresenting === 'Yes') && (
                         <div className="flex gap-4 items-baseline">
-                            <span className="text-xs font-mono font-bold text-[#00629B] shrink-0">02:00 PM</span>
+                            <span className="text-xs font-mono font-bold text-[#00629B] shrink-0">POSTER</span>
                             <span className="text-sm text-gray-700 leading-relaxed font-medium">
-                                {user.participationType}
+                                {user.posterTheme || 'Poster Presentation'}
                             </span>
                         </div>
                     )}
 
-                    {!user.theme && !user.participationType && (
+                    {!user.selectedEvent && !user.posterTheme && user.isPosterPresenting !== 'Yes' && (
                         <p className="text-sm text-gray-400 italic">No registered activities found.</p>
                     )}
                 </div>
@@ -168,6 +168,20 @@ const ParticipantProfileCard: React.FC<ParticipantProfileCardProps> = ({
                     <span>{getButtonContent()}</span>
                     {!isButtonDisabled && <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>}
                 </button>
+
+                {/* LinkedIn Action */}
+                {user.linkedin && (
+                    <button
+                        onClick={() => window.open(user.linkedin, '_blank')}
+                        className="w-full py-4 px-6 font-bold text-sm uppercase tracking-wider flex items-center justify-between group bg-[#0077b5] hover:bg-[#005582] text-white transition-colors duration-200 border-t border-white/10"
+                    >
+                        <div className="flex items-center gap-2">
+                            <span>LinkedIn Profile</span>
+                            <Linkedin size={16} />
+                        </div>
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </button>
+                )}
             </div>
         </div>
     );

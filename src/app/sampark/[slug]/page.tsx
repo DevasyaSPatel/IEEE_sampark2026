@@ -16,6 +16,7 @@ type PublicUser = {
     year?: string;
     department?: string;
     university?: string;
+    linkedin?: string;
     posterTheme?: string;
     isPosterPresenting?: string;
 };
@@ -139,7 +140,8 @@ export default function PublicProfile({ params }: { params: Promise<{ slug: stri
         bio: profile.bio,
         year: profile.year,
         department: profile.department,
-        university: profile.university
+        university: profile.university,
+        linkedin: profile.linkedin
     };
 
     return (
