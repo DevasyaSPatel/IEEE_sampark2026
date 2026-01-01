@@ -66,7 +66,7 @@ export default function ConferenceItinerary() {
                     Timeline
                 </span>
                 <h2 className="text-3xl font-bold text-ieee-navy">Conference Itinerary</h2>
-                <p className="text-gray-500 mt-2">January 11th, 2026</p>
+                <p className="text-gray-500 mt-2">January 18th, 2026</p>
             </div>
 
             <div className="relative">

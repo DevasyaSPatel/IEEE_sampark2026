@@ -65,5 +65,5 @@ export const SHEET_CONFIG = {
 
 export const EXTERNAL_LINKS = {
     REGISTRATION_FORM: "https://docs.google.com/forms/d/e/1FAIpQLScg0RwRMxFC2dbbkbNRfiv98E8uLkByGuGrZx-3fFNtALaNGA/viewform?usp=dialog",
-    WHATSAPP_GROUP: "https://chat.whatsapp.com/your-link-here"
+    WHATSAPP_GROUP: "https://chat.whatsapp.com/EuL3JAqzpILDxofDbVWAER"
 };

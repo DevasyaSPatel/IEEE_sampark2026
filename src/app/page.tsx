@@ -34,7 +34,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4 overflow-hidden relative">
-        <div className="absolute inset-0 z-0 opacity-5 bg-[url('/grid-pattern.png')] bg-repeat"></div>
+        <div className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-center opacity-50 bg-gradient-to-b from-ieee-blue to-ieee-white"></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -258,7 +258,7 @@ export default function Home() {
       {/* Achievements Section */}
       <section className="py-12 bg-ieee-navy text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center divide-x divide-blue-900/50">
+          <div className="grid grid-cols-3 gap-8 text-center divide-x divide-blue-900/50">
             <div className="flex flex-col items-center px-4">
               <div className="w-12 h-12 bg-ieee-blue/20 rounded-full flex items-center justify-center mb-3 text-ieee-sky">
                 <Users size={24} />

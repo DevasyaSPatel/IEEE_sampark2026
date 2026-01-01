@@ -40,14 +40,22 @@ export default function HistoryPage() {
             {/* Background Texture */}
             <div className="fixed inset-0 z-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#00629B 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
 
-            <div className="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-16 pt-24">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-16 pt-24">
 
                 {/* Header */}
                 <div className="mb-16 text-center">
                     {/* Updated Title and Content */}
                     <h1 className="text-4xl py-5 md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-ieee-blue">About SAMPARK</h1>
-                    <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Sampark is the flagship regional event of the IEEE Gujarat Section, envisioned to Reach Out and Engage the IEEE community by fostering technical excellence, collaboration, and innovation. The event serves as a common platform for students, professionals, researchers, and IEEE leaders to connect, learn, and grow together.
+                    <p className="text-lg py-5 md:text-xl text-gray-600 max-w-7xl mx-auto leading-relaxed ">
+                        SAMPARK (meaning "Contact") is the flagship event of the IEEE Gujarat Section. Launched in 2006 as a unique model for engagement and empowerment, it provides a common platform where students, professionals, and IEEE leaders co-create their annual roadmap.
+
+                    </p>
+                    <p className="text-lg py-5 md:text-xl text-gray-600 max-w-7xl mx-auto leading-relaxed ">
+                        Built on the pillars of Engagement, Value, and Empowerment, the event allows members to define their own "wish-list"—determining the what, why, and when of their technical journey. This democratic approach has fueled massive growth, scaling from a small gathering of 200 to a thriving network of over 800 members and 25 student branches.
+
+                    </p>
+                    <p className='text-4xl py-5 md:text-2xl lg:text-2xl font-bold text-black-600 max-w-7xl mx-auto leading-relaxed'>
+                        Our message is simple: Want Synergy? Adopt SAMPARK.
                     </p>
                 </div>
 
@@ -132,6 +140,6 @@ export default function HistoryPage() {
                     <p>© IEEE Gujarat Section & IEEE SB PDEU</p>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

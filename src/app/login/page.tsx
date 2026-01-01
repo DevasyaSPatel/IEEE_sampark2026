@@ -15,6 +15,7 @@ export default function Login() {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [resetLoading, setResetLoading] = useState(false);
     const { links } = useExternalLinks();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +28,36 @@ export default function Login() {
     // Note: ProtectedRoute handles non-login access, but for Login page, 
     // if already logged in, we might want to redirect.
     // However, usually Login page is accessible.
+
+    const handleForgotPassword = async () => {
+        if (!formData.email) {
+            setError('Please enter your email address to reset password');
+            return;
+        }
+
+        setResetLoading(true);
+        setError('');
+
+        try {
+            const res = await fetch('/api/auth/forgot-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: formData.email }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert('You must have received email for it on the entered email in email box.');
+            } else {
+                setError(data.message || 'Failed to send reset email');
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.');
+        } finally {
+            setResetLoading(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -100,7 +131,14 @@ export default function Login() {
                                 <label className="text-sm font-semibold text-ieee-navy flex items-center gap-2">
                                     <Lock size={16} className="text-ieee-blue" /> Password
                                 </label>
-                                <a href="#" className="text-xs text-ieee-blue font-semibold hover:underline">Forgot?</a>
+                                <button
+                                    type="button"
+                                    onClick={handleForgotPassword}
+                                    disabled={resetLoading}
+                                    className="text-xs text-ieee-blue font-semibold hover:underline disabled:opacity-50"
+                                >
+                                    {resetLoading ? 'Sending...' : 'Forgot?'}
+                                </button>
                             </div>
                             <input
                                 required

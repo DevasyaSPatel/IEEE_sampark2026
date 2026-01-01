@@ -627,5 +627,30 @@ export const GoogleSheetService = {
         } catch (error) {
             return null;
         }
+    },
+
+    async getUserWithCredentials(email: string) {
+        if (!SHEET_ID) throw new Error("Missing GOOGLE_SHEET_ID");
+
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: SHEET_ID,
+            range: `${SHEET_CONFIG.SHEETS.FORM_RESPONSES}!A:${SHEET_CONFIG.COLUMNS.SLUG}`,
+        });
+
+        const rows = response.data.values;
+        if (!rows || rows.length === 0) return null;
+
+        const userRow = rows.find((row: string[]) => row[SHEET_CONFIG.INDEX.EMAIL]?.trim() === email.trim());
+
+        if (userRow) {
+            return {
+                name: userRow[SHEET_CONFIG.INDEX.NAME],
+                email: userRow[SHEET_CONFIG.INDEX.EMAIL],
+                password: userRow[SHEET_CONFIG.INDEX.PASSWORD],
+                status: userRow[SHEET_CONFIG.INDEX.STATUS] || 'Pending',
+            };
+        }
+        return null;
     }
+
 };

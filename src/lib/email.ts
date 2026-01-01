@@ -38,8 +38,7 @@ export async function sendWelcomeEmail(to: string, name: string, user_id: string
                     <p><strong>Email ID:</strong> ${user_id}</p>
                     <p><strong>Password:</strong> ${pass}</p>
                 </div>
-                <p>You can login at <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/login">Sampark Login</a>.</p>
-                <p>Start connecting with others and explore the themes!</p>
+                <p>Start connecting with others and explore the events!</p>
                 <p style="color: #666; font-size: 12px; margin-top: 30px; text-align: center;">This is an automated message. Please do not reply.</p>
             </div>
         `,
