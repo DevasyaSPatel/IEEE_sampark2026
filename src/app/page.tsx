@@ -47,7 +47,7 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-ieee-navy mb-6 leading-tight">
               SAMPARK <span className="text-ieee-blue">2026</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
               Connecting minds, fostering innovation. Join the premier academic and professional networking event of the year.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -72,7 +72,7 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-ieee-navy mb-6">About the Conference</h2>
+            <h2 className="text-3xl md:text-5xl font-bold text-ieee-navy mb-6">About the Conference</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Sampark 2026 is the flagship event of the IEEE Student Branch at PDEU, designed to bridge the gap between academic learning and industrial application.
             </p>

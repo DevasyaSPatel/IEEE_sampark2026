@@ -110,8 +110,8 @@ export const GoogleSheetService = {
         rowValues[SHEET_CONFIG.INDEX.UNIVERSITY] = userData.university || '';
         rowValues[SHEET_CONFIG.INDEX.DEPARTMENT] = userData.department || '';
         rowValues[SHEET_CONFIG.INDEX.YEAR] = userData.year || '';
-        rowValues[SHEET_CONFIG.INDEX.EVENT_MORNING] = userData.theme || ''; // Mapping Theme -> Morning
-        rowValues[SHEET_CONFIG.INDEX.EVENT_AFTERNOON] = userData.participationType || ''; // Mapping Participation -> Afternoon
+        rowValues[SHEET_CONFIG.INDEX.SELECTED_EVENT] = userData.theme || ''; // Mapping Theme -> Morning
+        rowValues[SHEET_CONFIG.INDEX.POSTER_THEME] = userData.participationType || ''; // Mapping Participation -> Afternoon
         rowValues[SHEET_CONFIG.INDEX.TRANSACTION_ID] = userData.transactionId || '';
         rowValues[SHEET_CONFIG.INDEX.IEEE_MEMBERSHIP] = userData.ieeeMembershipNumber || '';
         rowValues[SHEET_CONFIG.INDEX.STATUS] = 'Pending';
@@ -156,8 +156,8 @@ export const GoogleSheetService = {
             university: row[SHEET_CONFIG.INDEX.UNIVERSITY],
             department: row[SHEET_CONFIG.INDEX.DEPARTMENT],
             year: row[SHEET_CONFIG.INDEX.YEAR],
-            theme: row[SHEET_CONFIG.INDEX.EVENT_MORNING],
-            participationType: row[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+            selectedEvent: row[SHEET_CONFIG.INDEX.SELECTED_EVENT],
+            posterTheme: row[SHEET_CONFIG.INDEX.POSTER_THEME],
             transactionId: row[SHEET_CONFIG.INDEX.TRANSACTION_ID],
             ieeeMembershipNumber: row[SHEET_CONFIG.INDEX.IEEE_MEMBERSHIP],
             status: row[SHEET_CONFIG.INDEX.STATUS] || 'Pending',
@@ -189,9 +189,9 @@ export const GoogleSheetService = {
 
         // Update Name..Participation (B..I)
         const range1Start = SHEET_CONFIG.COLUMNS.NAME;
-        const range1End = SHEET_CONFIG.COLUMNS.EVENT_AFTERNOON;
+        const range1End = SHEET_CONFIG.COLUMNS.POSTER_THEME;
         const startIdx = SHEET_CONFIG.INDEX.NAME;
-        const endIdx = SHEET_CONFIG.INDEX.EVENT_AFTERNOON;
+        const endIdx = SHEET_CONFIG.INDEX.POSTER_THEME;
 
         // Construct array from data
         const rowValues1 = [
@@ -300,7 +300,7 @@ export const GoogleSheetService = {
             )
             .map((user: any) => ({
                 name: user.name,
-                theme: user.theme,
+                selectedEvent: user.selectedEvent,
                 slug: user.slug
             }))
             .slice(0, 10);
@@ -357,8 +357,8 @@ export const GoogleSheetService = {
                 email: userRow[SHEET_CONFIG.INDEX.EMAIL],
                 phone: userRow[SHEET_CONFIG.INDEX.PHONE],
                 role: 'user',
-                theme: userRow[SHEET_CONFIG.INDEX.EVENT_MORNING],
-                participationType: userRow[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+                selectedEvent: userRow[SHEET_CONFIG.INDEX.SELECTED_EVENT],
+                posterTheme: userRow[SHEET_CONFIG.INDEX.POSTER_THEME],
                 transactionId: userRow[SHEET_CONFIG.INDEX.TRANSACTION_ID],
                 ieeeMembershipNumber: userRow[SHEET_CONFIG.INDEX.IEEE_MEMBERSHIP],
                 linkedin: userRow[SHEET_CONFIG.INDEX.LINKEDIN],
@@ -486,9 +486,9 @@ export const GoogleSheetService = {
                 rowIndex: index + 2,
                 name: row[SHEET_CONFIG.INDEX.NAME],
                 email: row[SHEET_CONFIG.INDEX.EMAIL],
-                theme: row[SHEET_CONFIG.INDEX.EVENT_MORNING], // Theme is Morning Event
+                selectedEvent: row[SHEET_CONFIG.INDEX.SELECTED_EVENT], // Theme is Morning Event
                 connections: count,
-                participationType: row[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+                posterTheme: row[SHEET_CONFIG.INDEX.POSTER_THEME],
                 slug: row[SHEET_CONFIG.INDEX.SLUG]
             };
         });
@@ -556,12 +556,12 @@ export const GoogleSheetService = {
                 name: userRow[SHEET_CONFIG.INDEX.NAME],
                 // email: email, // Hide email for public?
                 role: 'user',
-                theme: userRow[SHEET_CONFIG.INDEX.EVENT_MORNING],
+                selectedEvent: userRow[SHEET_CONFIG.INDEX.SELECTED_EVENT],
                 linkedin: userRow[SHEET_CONFIG.INDEX.LINKEDIN],
                 slug: userRow[SHEET_CONFIG.INDEX.SLUG],
                 instagram: userRow[SHEET_CONFIG.INDEX.INSTAGRAM],
                 github: userRow[SHEET_CONFIG.INDEX.GITHUB],
-                participationType: userRow[SHEET_CONFIG.INDEX.EVENT_AFTERNOON],
+                posterTheme: userRow[SHEET_CONFIG.INDEX.POSTER_THEME],
                 connections: connectionsCount,
             };
         }
