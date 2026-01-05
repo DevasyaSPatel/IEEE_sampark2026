@@ -42,7 +42,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-ieee-blue text-sm font-semibold tracking-wide mb-6">
-              IEEE STUDENT BRANCH PDEU PRESENTS
+              IEEE GUJARAT SECTION PRESENTS
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-ieee-navy mb-6 leading-tight">
               SAMPARK <span className="text-ieee-blue">2026</span>
@@ -55,7 +55,7 @@ export default function Home() {
                 onClick={() => window.open(links?.REGISTRATION_FORM || '#', '_blank')}
                 className="bg-ieee-blue hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
               >
-                Register for Conference <ArrowRight size={20} />
+                Register <ArrowRight size={20} />
               </button>
               <Link
                 href="/sampark-history"
@@ -72,7 +72,7 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-ieee-navy mb-6">About the Conference</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-ieee-navy mb-6">About Sampark</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Sampark 2026 is the flagship event of the IEEE Student Branch at PDEU, designed to bridge the gap between academic learning and industrial application.
             </p>
@@ -121,6 +121,13 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="mb-20 overflow-hidden">
+            <h3 className="text-xl md:text-2xl font-bold text-ieee-navy text-center mb-10">Our Supporters</h3>
+            <a>
+              <img src="/gallery/IEEE LOGOs/IEEE Chapters.png" alt="IEEE Chapters" className="w-full h-auto object-contain transition-all" />
+            </a>
           </div>
 
           {/* Tier 3: Legacy CTA */}
@@ -231,7 +238,7 @@ export default function Home() {
       {/* Animated Gallery */}
       <section className="py-16 bg-ieee-light overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 mb-8">
-          <h2 className="text-3xl font-bold text-ieee-navy">Gallery</h2>
+          <h2 className="text-3xl font-bold text-ieee-navy">Glimpse of recent events</h2>
         </div>
 
         {/* Carousel Container */}

@@ -65,7 +65,7 @@ export default function ConferenceItinerary() {
                 <span className="bg-ieee-blue/10 text-ieee-blue font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider mb-4 inline-block">
                     Timeline
                 </span>
-                <h2 className="text-3xl font-bold text-ieee-navy">Conference Itinerary</h2>
+                <h2 className="text-3xl font-bold text-ieee-navy">Sampark Itinerary</h2>
                 <p className="text-gray-500 mt-2">January 18th, 2026</p>
             </div>
 

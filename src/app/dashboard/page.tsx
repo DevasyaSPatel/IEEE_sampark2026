@@ -294,12 +294,6 @@ export default function Dashboard() {
                             </button>
                         )}
                         <button
-                            onClick={scanNFC}
-                            className={`px-4 py-2 rounded-lg font-semibold text-white shadow-md transition-all ${isScanning ? 'bg-green-600 animate-pulse' : 'bg-ieee-warning hover:bg-amber-600'}`}
-                        >
-                            {isScanning ? 'Scanning...' : 'Connect via NFC'}
-                        </button>
-                        <button
                             onClick={logout}
                             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors ml-4"
                         >
@@ -307,25 +301,6 @@ export default function Dashboard() {
                         </button>
                     </div>
                 </div>
-
-                {showSimulateInput && (
-                    <div className="text-center mb-6 p-6 bg-white rounded-xl border border-gray-200 shadow-sm animate-fade-in">
-                        <h3 className="text-lg font-bold mb-4 text-ieee-navy">NFC Simulation Mode</h3>
-                        <form onSubmit={handleSimulateConnect} className="flex gap-2 max-w-md mx-auto">
-                            <input
-                                type="text"
-                                placeholder="Enter Target Email"
-                                value={simulateEmail}
-                                onChange={e => setSimulateEmail(e.target.value)}
-                                className="flex-1 bg-gray-50 border border-gray-300 rounded-lg p-3 text-gray-900 focus:outline-none focus:border-ieee-blue"
-                            />
-                            <button type="submit" className="bg-ieee-blue text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                                Simulate Tap
-                            </button>
-                            <button type="button" onClick={() => setShowSimulateInput(false)} className="text-gray-400 px-3 hover:text-gray-600">Cancel</button>
-                        </form>
-                    </div>
-                )}
 
                 {/* Tabs */}
                 <div className="flex gap-6 mb-8 border-b border-gray-200 overflow-x-auto">
@@ -414,13 +389,6 @@ export default function Dashboard() {
                                     )}
 
                                     <div className="grid grid-cols-2 gap-4 pt-2">
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-semibold text-gray-400 uppercase">Transaction ID</label>
-                                            <div className="flex items-center gap-2 text-gray-600">
-                                                <CreditCard size={16} />
-                                                <span className="font-mono bg-slate-100 px-2 py-1 rounded text-sm break-all">{user.transactionId || 'N/A'}</span>
-                                            </div>
-                                        </div>
                                         <div className="space-y-1">
                                             <label className="text-xs font-semibold text-gray-400 uppercase">IEEE ID</label>
                                             <div className="flex items-center gap-2 text-gray-600">

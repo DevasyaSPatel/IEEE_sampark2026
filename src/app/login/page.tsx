@@ -97,7 +97,7 @@ export default function Login() {
                             </div>
                         </Link>
                         <h1 className="text-2xl font-bold text-ieee-navy">Welcome Back</h1>
-                        <p className="text-gray-500 mt-2 text-sm">Sign in to access your dashboard and event tickets.</p>
+                        <p className="text-gray-500 mt-2 text-sm">Sign in to access your dashboard.</p>
                     </div>
                 </div>
 

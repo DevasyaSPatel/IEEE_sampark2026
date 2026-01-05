@@ -57,17 +57,32 @@ export default function EventsPage() {
             lightColor: "bg-purple-50",
             events: [
                 { type: "Competition", title: "Two-stage Hackathon" },
-                { type: "Event", title: "Panel Discussion" }
+
+            ]
+        },
+        {
+            title: "SCET Student Branch",
+            icon: <Lightbulb size={32} className="text-white" />,
+            color: "bg-red-600",
+            lightColor: "bg-emerald-50",
+            events: [
+                { type: "DSC 3.0", title: "DSC 3.0 by SCET Student Branch" },
             ]
         }
     ];
 
     const posterThemes = [
-        "Smart Devices with On-Device Intelligence",
-        "Advances in RF, Microwave, and Wireless Systems",
-        "Intelligent Energy Management",
+        "On-Device Intelligence",
+        "RF/Microwave/Wireless",
+        "Energy Management",
         "Applied AI",
         "Robotics for Social Good"
+    ];
+
+    const nonTechThemes = [
+        "SB best practices overview",
+        "SB future planned events",
+        "SB past well-executed events"
     ];
 
     return (
@@ -124,9 +139,18 @@ export default function EventsPage() {
                         </div>
 
                         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                            <h3 className="text-xl font-bold mb-4 border-b border-white/20 pb-3">Presentation Themes</h3>
+                            <h3 className="text-xl font-bold mb-4 border-b border-white/20 pb-3">Technical Themes</h3>
                             <ul className="space-y-3">
                                 {posterThemes.map((theme, idx) => (
+                                    <li key={idx} className="flex items-start gap-3">
+                                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-300 shrink-0"></div>
+                                        <span className="text-blue-50 font-medium">{theme}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <h3 className="text-xl font-bold mb-4 border-b border-white/20 py-5 pb-3">Non-Technical Themes</h3>
+                            <ul className="space-y-3">
+                                {nonTechThemes.map((theme, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
                                         <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-300 shrink-0"></div>
                                         <span className="text-blue-50 font-medium">{theme}</span>

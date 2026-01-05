@@ -33,11 +33,11 @@ export const SHEET_CONFIG = {
         IEEE_MEMBERSHIP: 'K', // Shifted from L
         IS_POSTER_PRESENTING: 'M', // Swapped with LinkedIn
         LINKEDIN: 'N', // Swapped with IsPosterPresenting
-        STATUS: 'O', // Shifted from M
-        PASSWORD: 'P', // Shifted from N
-        GITHUB: 'Q', // Replaces ANYTHING_ELSE
-        INSTAGRAM: 'R', // Shifted from R
-        SLUG: 'S' // Shifted from Q
+        STATUS: 'U', // Shifted from M
+        PASSWORD: 'V', // Shifted from N
+        GITHUB: 'W', // Replaces ANYTHING_ELSE
+        INSTAGRAM: 'X', // Shifted from R
+        SLUG: 'Y' // Shifted from Q
     },
     // Corresponding Indices (Calculated automatically or explicitly mapped if needed for logic)
     get INDEX() {

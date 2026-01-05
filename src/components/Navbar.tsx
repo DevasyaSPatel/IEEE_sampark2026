@@ -32,6 +32,7 @@ export default function Navbar() {
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
                         <Link href="/" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Home</Link>
+                        <Link href="https://ieeegujaratsection.org/" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">IEEE Gujarat Section</Link>
                         <Link href="/about" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">About IEEE PDEU</Link>
                         <Link href="/sampark-history" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">About SAMPARK</Link>
                         <Link href="/events" className="text-ieee-navy hover:text-ieee-blue font-medium transition-colors">Events</Link>
@@ -90,6 +91,7 @@ export default function Navbar() {
                     >
                         <div className="px-4 pt-2 pb-6 space-y-2">
                             <Link href="/" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Home</Link>
+                            <Link href="https://ieeegujaratsection.org/" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">IEEE Gujarat Section</Link>
                             <Link href="/about" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">About IEEE PDEU</Link>
                             <Link href="/sampark-history" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">About SAMPARK</Link>
                             <Link href="/events" className="block px-3 py-2 text-base font-medium text-ieee-navy hover:bg-gray-50 rounded-md">Events</Link>
