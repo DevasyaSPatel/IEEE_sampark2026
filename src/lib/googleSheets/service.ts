@@ -101,7 +101,7 @@ export const GoogleSheetService = {
         // Easiest is to build an array up to the last column we need.
 
         // Current max column is SLUG (R = 17)
-        const rowValues = new Array(18).fill('');
+        const rowValues = new Array(SHEET_CONFIG.INDEX.SLUG + 1).fill('');
 
         rowValues[SHEET_CONFIG.INDEX.TIMESTAMP] = new Date().toLocaleString();
         rowValues[SHEET_CONFIG.INDEX.NAME] = userData.name;
