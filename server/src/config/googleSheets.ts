@@ -58,7 +58,8 @@ export const SHEET_CONFIG = {
             PASSWORD: col(this.COLUMNS.PASSWORD),
             GITHUB: col(this.COLUMNS.GITHUB),
             LINKEDIN: col(this.COLUMNS.LINKEDIN),
-            INSTAGRAM: col(this.COLUMNS.INSTAGRAM)
+            INSTAGRAM: col(this.COLUMNS.INSTAGRAM),
+            SLUG: col(this.COLUMNS.SLUG)
         };
     }
 };

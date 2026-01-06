@@ -47,7 +47,7 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-ieee-navy mb-6 leading-tight">
               SAMPARK <span className="text-ieee-blue">2026</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
               Connecting minds, fostering innovation. Join the premier academic and professional networking event of the year.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">

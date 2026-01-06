@@ -8,7 +8,7 @@ import ParticipantProfileCard from '@/components/ParticipantProfileCard';
 type User = {
     id: string;
     name: string;
-    theme: string;
+    selectedEvent: string;
     bio: string;
     connections: number;
     linkedin?: string;
