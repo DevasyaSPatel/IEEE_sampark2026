@@ -167,7 +167,7 @@ export default function Home() {
             {[
               {
                 title: "Computer Society",
-                subtitle: "Expert Talk: Semiconductors & HW Acceleration • Workshop: FPGA & ML Integration",
+                subtitle: "Workshop: FPGA & ML Integration",
                 link: "/events"
               },
               {
@@ -177,22 +177,22 @@ export default function Home() {
               },
               {
                 title: "Antennas & Propagation",
-                subtitle: "Expert Talk: Antenna Tech Advancements • Workshop: Keysight ADS",
+                subtitle: "Workshop: RF & Microwave Circuit Design Workshop with Industry Tools",
                 link: "/events"
               },
               {
                 title: "Industry Applications",
-                subtitle: "Expert Talk: Industry 4.0 • Workshop: MOSFET Gate Driver Design",
+                subtitle: "Workshop: Inverters & mosfet gate driving techniques",
                 link: "/events"
               },
               {
                 title: "Women in Engineering",
-                subtitle: "Review Paper Hackathon • Interactive Expert Panel Discussion",
-                link: "/events"
+                subtitle: "Review Paper Hackathon",
+                link: "https://unstop.com/hackathons/cognivia-hackathon-pandit-deendayal-energy-university-pdeu-formerly-pdpu-gandhinagar-1607961"
               },
               {
                 title: "Poster Presentation",
-                subtitle: "Showcase: Smart Devices, RF Systems, Energy Management, Applied AI, Robotics",
+                subtitle: "Showcase: Smart Devices, RF Systems, Energy Management, Applied AI, Robotics Etc.",
                 link: "/events"
               }
             ].map((event, idx) => (
