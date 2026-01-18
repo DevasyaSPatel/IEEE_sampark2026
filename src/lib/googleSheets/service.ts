@@ -261,22 +261,28 @@ export const GoogleSheetService = {
         const emailToNameMap = new Map();
         const emailToSlugMap = new Map();
         users.forEach((u: any) => {
-            emailToNameMap.set(u.email.toLowerCase(), u.name);
-            emailToSlugMap.set(u.email.toLowerCase(), u.slug);
+            if (u.email) {
+                emailToNameMap.set(u.email.toLowerCase(), u.name);
+                emailToSlugMap.set(u.email.toLowerCase(), u.slug);
+            }
         });
 
         const normalizedEmail = email.trim().toLowerCase();
 
         return rows
-            .filter((row: string[]) =>
-                row[0]?.trim().toLowerCase() === normalizedEmail || row[1]?.trim().toLowerCase() === normalizedEmail
-            )
+            .filter((row: string[]) => {
+                const source = row[0]?.trim().toLowerCase();
+                const target = row[1]?.trim().toLowerCase();
+                return source === normalizedEmail || target === normalizedEmail;
+            })
             .map((row: string[]) => {
                 const source = row[0]?.trim().toLowerCase();
                 const target = row[1]?.trim().toLowerCase();
                 const isTarget = target === normalizedEmail;
 
                 const otherEmail = isTarget ? source : target;
+                if (!otherEmail) return null; // Should not happen given filter, but safe guard
+
                 const otherNameRaw = isTarget ? row[3] : null; // Name stored if incoming
                 const otherNameResolved = emailToNameMap.get(otherEmail) || otherNameRaw || 'Anonymous';
                 const otherSlug = emailToSlugMap.get(otherEmail) || '#';
@@ -293,7 +299,9 @@ export const GoogleSheetService = {
                     name: otherNameResolved,
                     slug: otherSlug
                 };
-            }).reverse();
+            })
+            .filter((c) => c !== null)
+            .reverse();
     },
 
     async searchUsers(query: string) {

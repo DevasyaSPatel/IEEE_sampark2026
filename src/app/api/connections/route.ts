@@ -13,6 +13,7 @@ export async function GET(request: Request) {
         const connections = await GoogleSheetService.getUserConnections(email);
         return NextResponse.json(connections);
     } catch (error) {
+        console.error("Error in GET /api/connections:", error);
         return NextResponse.json({ error: 'Failed to fetch connections' }, { status: 500 });
     }
 }
