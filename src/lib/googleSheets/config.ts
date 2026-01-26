@@ -37,7 +37,8 @@ export const SHEET_CONFIG = {
         PASSWORD: 'V', // Shifted from N
         GITHUB: 'W', // Replaces ANYTHING_ELSE
         INSTAGRAM: 'X', // Shifted from R
-        SLUG: 'Y' // Shifted from Q
+        SLUG: 'Y', // Shifted from Q
+        CERTIFICATE: 'Z'
     },
     // Corresponding Indices (Calculated automatically or explicitly mapped if needed for logic)
     get INDEX() {
@@ -59,7 +60,8 @@ export const SHEET_CONFIG = {
             GITHUB: col(this.COLUMNS.GITHUB),
             LINKEDIN: col(this.COLUMNS.LINKEDIN),
             SLUG: col(this.COLUMNS.SLUG),
-            INSTAGRAM: col(this.COLUMNS.INSTAGRAM)
+            INSTAGRAM: col(this.COLUMNS.INSTAGRAM),
+            CERTIFICATE: col(this.COLUMNS.CERTIFICATE)
         };
     }
 };

@@ -142,7 +142,7 @@ export const GoogleSheetService = {
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: `${SHEET_CONFIG.SHEETS.FORM_RESPONSES}!A:${SHEET_CONFIG.COLUMNS.SLUG}`,
+            range: `${SHEET_CONFIG.SHEETS.FORM_RESPONSES}!A:${SHEET_CONFIG.COLUMNS.CERTIFICATE}`,
         });
 
         const rows = response.data.values;
@@ -167,6 +167,7 @@ export const GoogleSheetService = {
             slug: row[SHEET_CONFIG.INDEX.SLUG],
             instagram: row[SHEET_CONFIG.INDEX.INSTAGRAM],
             isPosterPresenting: row[SHEET_CONFIG.INDEX.IS_POSTER_PRESENTING],
+            certificate: row[SHEET_CONFIG.INDEX.CERTIFICATE] || null
         }));
     },
 
@@ -360,7 +361,7 @@ export const GoogleSheetService = {
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: SHEET_ID,
-            range: `${SHEET_CONFIG.SHEETS.FORM_RESPONSES}!A:${SHEET_CONFIG.COLUMNS.SLUG}`,
+            range: `${SHEET_CONFIG.SHEETS.FORM_RESPONSES}!A:${SHEET_CONFIG.COLUMNS.CERTIFICATE}`,
         });
 
         const rows = response.data.values;
@@ -385,6 +386,7 @@ export const GoogleSheetService = {
                 instagram: userRow[SHEET_CONFIG.INDEX.INSTAGRAM],
                 github: userRow[SHEET_CONFIG.INDEX.GITHUB],
                 connections: connections,
+                certificate: userRow[SHEET_CONFIG.INDEX.CERTIFICATE] || null
             };
         }
         return null;

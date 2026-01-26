@@ -14,7 +14,10 @@ import {
     Instagram,
     Calendar,
     Clock,
-    ShieldAlert
+    ShieldAlert,
+    LetterTextIcon,
+    AwardIcon,
+    FileBadge
 } from 'lucide-react';
 
 import Navbar from '@/components/Navbar';
@@ -22,6 +25,7 @@ import RequestsList from '@/components/RequestsList';
 import { useConnectionLogic } from '@/hooks/useConnectionLogic';
 import { useAuth } from '@/context/AuthContext';
 import { useExternalLinks } from '@/hooks/useExternalLinks';
+import { Certificate } from 'crypto';
 
 type User = {
     id: string;
@@ -40,6 +44,7 @@ type User = {
     slug: string;
     phone: string;
     status?: string; // Add status for pending check
+    certificate?: string | null;
 };
 
 type Connection = {
@@ -399,6 +404,35 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Certificate Download Card */}
+                            {user.certificate && (
+                                <div className="bg-gradient-to-r from-ieee-blue to-blue-600 p-6 rounded-2xl shadow-md text-white animate-fade-in relative overflow-hidden group">
+                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                        <FileBadge size={100} />
+                                    </div>
+                                    <h3 className="text-xl font-bold mb-2 flex items-center gap-2 relative z-10">
+                                        <AwardIcon size={24} /> Certificate Available!
+                                    </h3>
+                                    <p className="text-blue-100 mb-6 relative z-10 max-w-sm">
+                                        Your certificate for IEEE Sampark 2026 is ready. Download it now to share your achievement.
+                                    </p>
+                                    <button
+                                        onClick={() => {
+                                            const link = document.createElement('a');
+                                            link.href = `/api/certificate/download?userId=${user.email}`;
+                                            link.setAttribute('download', 'Certificate.pdf');
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                        }}
+                                        className="bg-white text-ieee-blue px-6 py-3 rounded-lg font-bold shadow-lg hover:bg-gray-50 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 relative z-10"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></svg>
+                                        Download Certificate
+                                    </button>
+                                </div>
+                            )}
 
                             {/* Social Links Update Form */}
                             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
